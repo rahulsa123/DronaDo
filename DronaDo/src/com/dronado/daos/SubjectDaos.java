@@ -1,0 +1,173 @@
+package com.dronado.daos;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import com.dronado.pojos.Subject;
+import com.dronado.utilities.ConnectionPool;
+
+public class SubjectDaos {
+
+	public int insert(Subject s) {
+		ConnectionPool pool = ConnectionPool.getInstance();
+		Connection conn = pool.getConnection();
+		int id=0;
+		try {
+			String sql = "INSERT INTO subject(sname,sstandard,sstream) VALUES(?,?,?)";
+			PreparedStatement ps = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, s.getSName());
+			ps.setString(2, s.getSStandard());
+			ps.setString(3, s.getSStream());
+			ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
+			while(rs.next()) {
+				id = rs.getInt(1);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			pool.putConnection(conn);
+		}
+		return id;
+	}
+	
+	public ArrayList<Subject> getSubjectsByStream(String stream) {
+		ConnectionPool pool = ConnectionPool.getInstance();
+		Connection conn = pool.getConnection();
+		ArrayList<Subject> subList = new ArrayList<Subject>();
+		try {
+			String sql = "SELECT * FROM subject WHERE sstream=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,stream);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				Subject sub = new Subject();
+				sub.setSId(rs.getInt("sid"));
+				sub.setSName(rs.getString("sname"));
+				sub.setSStandard(rs.getString("sstandard"));
+				sub.setSStream(rs.getString("sstream"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			pool.putConnection(conn);
+		}
+		return subList;
+	}
+
+	public ArrayList<Subject> getSubjectsByStandard(String standard) {
+		ConnectionPool pool = ConnectionPool.getInstance();
+		Connection conn = pool.getConnection();
+		ArrayList<Subject> subList = new ArrayList<Subject>();
+		try {
+			String sql = "SELECT * FROM subject WHERE sstandard=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,standard);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				Subject sub = new Subject();
+				sub.setSId(rs.getInt("sid"));
+				sub.setSName(rs.getString("sname"));
+				sub.setSStandard(rs.getString("sstandard"));
+				sub.setSStream(rs.getString("sstream"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			pool.putConnection(conn);
+		}
+		return subList;
+	}	
+	
+	public ArrayList<Subject> getSubjectsByName(String sname) {
+		ConnectionPool pool = ConnectionPool.getInstance();
+		Connection conn = pool.getConnection();
+		ArrayList<Subject> subList = new ArrayList<Subject>();
+		try {
+			String sql = "SELECT * FROM subject WHERE sname=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,sname);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				Subject sub = new Subject();
+				sub.setSId(rs.getInt("sid"));
+				sub.setSName(rs.getString("sname"));
+				sub.setSStandard(rs.getString("sstandard"));
+				sub.setSStream(rs.getString("sstream"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			pool.putConnection(conn);
+		}
+		return subList;
+	}
+	
+	public Subject getSubjectById(int sid) {
+		ConnectionPool pool = ConnectionPool.getInstance();
+		Connection conn = pool.getConnection();
+		Subject sub = new Subject();
+		try {
+			String sql = "SELECT * FROM subject WHERE sid=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1,sid);
+			ResultSet rs =ps.executeQuery();
+			if(rs.next()) {
+				sub.setSId(rs.getInt("sid"));
+				sub.setSName(rs.getString("sname"));
+				sub.setSStandard(rs.getString("sstandard"));
+				sub.setSStream(rs.getString("sstream"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			pool.putConnection(conn);
+		}
+		return sub;
+	}
+	public void removeById(int sId) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		try {
+			String sql ="delete from subject where sid=?";
+			PreparedStatement pd = c.prepareStatement(sql);
+			pd.setInt(1, sId);
+			pd.executeUpdate();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			cp.putConnection(c);
+		}
+	}
+	public void edit(Subject s) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		try {
+			String sql ="update subject set sname=?, sstandard=?,sstream=?  where sid=?";
+			PreparedStatement pd = c.prepareStatement(sql);
+			pd.setString(1, s.getSName());
+			pd.setString(2, s.getSStandard());
+			pd.setString(3, s.getSStream());
+			pd.setInt(4, s.getSId());
+			pd.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			cp.putConnection(c);
+		}
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		SubjectDaos sd = new SubjectDaos();
+		Subject s = new Subject(0, "Science", "6th", "main");
+//		sd.removeById(1);
+		s.setSId(2);
+		sd.edit(s);
+		System.out.println();
+	}
+
+}

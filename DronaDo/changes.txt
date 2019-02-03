@@ -1,0 +1,12 @@
+TutorDao :-new method >Tutor findByTuId(int tuId)
+		ArrayList<Tutor> findByAddressId(int tuId) 
+	
+UserDaos :-  new method >String getUsernameByUId(int uId)
+			>String getPasswordByUId(int uId)
+
+StudentDaos :- new method > Student findByStudId(int studId)
+
+AssignedDaos :- new method > ArrayList<Student> findAllStudentByTuId(int tuId)
+			
+UserDaos :- new method >  String getPasswordByUsername(String username) 
+			void editPasswordByUId(int uId,String password) 
