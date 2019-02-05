@@ -136,6 +136,36 @@ public class TutorDaos {
 		}
 		return t;
 	}
+	public Tutor findByUId(int tuId) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		Tutor t = null;
+		UserDaos ud = new UserDaos();
+		try {
+			String sql = "select * from Tutor where uid=?";
+			PreparedStatement pd = c.prepareStatement(sql);
+			pd.setInt(1, tuId);
+			ResultSet rs = pd.executeQuery();
+			if(rs.next()) {
+				t = new Tutor(rs.getString("tuFullName"), rs.getString("tuEmail"), rs.getString("tuPhoneNo"), rs.getString("tuAddress"), rs.getString("qualification"), rs.getInt("tuAddressId"));
+				t.setUId(rs.getInt("uid"));
+				t.setTuId(rs.getInt("tuid"));
+				t.setUsername(ud.getUsernameByUId(t.getUId()));
+				
+				t.setUserType("tutor");
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error in TutorDaos.findByTuId" +e);
+		}finally {
+			cp.putConnection(c);
+		}
+		return t;
+	}
+	
+	
+	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		TutorDaos td = new TutorDaos();

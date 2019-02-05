@@ -41,17 +41,13 @@ document.getElementById("title").innerHTML ="Profile";
  	<td>Address : </td>
  	<td> <%= (String)request.getAttribute("address") %></td>
  </tr>
- <% if(!request.getAttribute("qualification").equals("")){ %>
+ <% if(request.getAttribute("qualification")!=null &&!request.getAttribute("qualification").equals("")){ %>
  <tr>
  	<td>Qualification : </td>
  	<td> <%= (String)request.getAttribute("qualification") %></td>
  </tr>
- 
  <% } %>
  </table>
- <img src ="/DronaDo/img/face.png" alt ="userImage" id="user">
- 
- 
  
 </div>
 <jsp:include page="Bottom.jsp" flush="true"></jsp:include>

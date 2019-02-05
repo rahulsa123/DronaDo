@@ -107,6 +107,28 @@ public String getPasswordByUId(int uId) {
 	}
 	return password;
 	}
+
+public String getUserTypeByUId(int uId) {
+	ConnectionPool cp = ConnectionPool.getInstance();
+	Connection c = cp.getConnection();
+	String userType = null;
+	try {
+		String sql = "select * from user where uid=?";
+		PreparedStatement pd = c.prepareStatement(sql);
+		pd.setInt(1, uId);
+		ResultSet rs = pd.executeQuery();
+		if (rs.next()) {
+			userType = rs.getString("userType");
+		}
+	}catch (Exception e) {
+		// TODO: handle exception
+		System.out.println("Error in UserDaos.getPasswordByUId "+e);
+	}finally {
+		cp.putConnection(c);
+	}
+	return userType;
+	}
+
 public String getPasswordByUsername(String username) {
 	ConnectionPool cp = ConnectionPool.getInstance();
 	Connection c = cp.getConnection();

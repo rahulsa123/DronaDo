@@ -21,7 +21,7 @@
                     </a>
                  </li>
                  <li>
-                    <a href="../ProfileController">
+                    <a href="/DronaDo/Profile">
                     	<i class="fas fa-user-tie"></i>
                     	Profile
                     </a>
