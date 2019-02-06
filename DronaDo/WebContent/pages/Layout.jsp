@@ -22,6 +22,7 @@ document.getElementById("title").innerHTML =" Title of page";
 
 
  -->
+ <a href="/DronaDo/Profile">hhh</a>
 </div>
 <jsp:include page="Bottom.jsp" flush="true"></jsp:include>
 </body>

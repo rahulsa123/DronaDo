@@ -465,5 +465,8 @@ a.article:hover {
 }
 .MainPart table {
 	max-width: 70%;
-	float:left;
-	}
+	
+}
+#editForm{
+	display: none;
+}

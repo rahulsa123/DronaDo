@@ -37,34 +37,37 @@ public class Profile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
+		UserDaos ud = new UserDaos();
 		// for testing purpose
 		session.setAttribute("uid", 1);
 		
+		session.setAttribute("userType", ud.getUserTypeByUId(1));
 		
 		
-		UserDaos ud = new UserDaos();
 		int uid = (int)session.getAttribute("uid");
 		if(uid!=0) {
 			// to edit information
 		
 			String operation = request.getParameter("operation");
+			System.out.println(operation+request.getParameter("fullName"));
 			if(operation!= null && operation.equalsIgnoreCase("edit")){
 				String userType =ud.getUserTypeByUId(uid);
 				if(userType.equalsIgnoreCase("student") || userType.equalsIgnoreCase("Parent")) {
 					StudentDaos sd = new StudentDaos();
 					Student s = sd.findByUId(uid);
-					s.setStudFullName(request.getParameter("fullname"));
+					s.setStudFullName(request.getParameter("fullName"));
 					s.setStudEmail(request.getParameter("email"));
-					s.setStudPhoneNo(request.getParameter("phoneno"));
+					s.setStudPhoneNo(request.getParameter("phoneNo"));
 					s.setStudAddress(request.getParameter("address"));
+					System.out.println(s);
 					sd.edit(s);
 				}
 				else if(userType.equalsIgnoreCase("tutor") ) {
 				TutorDaos td = new TutorDaos();
 				Tutor t = td.findByUId(uid);
-				t.setTuFullName(request.getParameter("fullname"));
+				t.setTuFullName(request.getParameter("fullName"));
 				t.setTuEmail(request.getParameter("email"));
-				t.setTuPhoneNo(request.getParameter("phoneno"));
+				t.setTuPhoneNo(request.getParameter("phoneNo"));
 				t.setTuAddress(request.getParameter("address"));
 				t.setQualification(request.getParameter("qualification"));
 				td.edit(t);
@@ -100,8 +103,8 @@ public class Profile extends HttpServlet {
 			}
 			
 		}
-	System.out.println(uid);
-		System.out.println(request.getAttribute("fullName"));
+	//System.out.println(uid);
+		//System.out.println(request.getAttribute("fullName"));
 		RequestDispatcher rs = request.getRequestDispatcher("/pages/Profile.jsp");
 		rs.forward(request, response);
 	}
