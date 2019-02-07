@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <li>
-                    <a onclick="window.alert('clicked');$('#MainPart').load('ManageSubjects.jsp')">
+                    <a onclick="$('.MainPart').load('/DronaDo/pages/ManageSubjects.jsp');">
                         <i class="fa fa-book"></i>
                         Manage Subject
                     </a>

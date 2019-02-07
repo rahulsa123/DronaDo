@@ -1,4 +1,6 @@
-
+<script type="text/javascript">
+document.getElementById("title").innerHTML ="Manage Subjects";
+</script>
 <div class="container text-center">
 	Manage Subjects
 	

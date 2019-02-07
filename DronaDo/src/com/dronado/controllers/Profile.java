@@ -49,7 +49,7 @@ public class Profile extends HttpServlet {
 			// to edit information
 		
 			String operation = request.getParameter("operation");
-			System.out.println(operation+request.getParameter("fullName"));
+		//	System.out.println(operation+request.getParameter("fullName"));
 			if(operation!= null && operation.equalsIgnoreCase("edit")){
 				String userType =ud.getUserTypeByUId(uid);
 				if(userType.equalsIgnoreCase("student") || userType.equalsIgnoreCase("Parent")) {
@@ -59,7 +59,7 @@ public class Profile extends HttpServlet {
 					s.setStudEmail(request.getParameter("email"));
 					s.setStudPhoneNo(request.getParameter("phoneNo"));
 					s.setStudAddress(request.getParameter("address"));
-					System.out.println(s);
+				//	System.out.println(s);
 					sd.edit(s);
 				}
 				else if(userType.equalsIgnoreCase("tutor") ) {
