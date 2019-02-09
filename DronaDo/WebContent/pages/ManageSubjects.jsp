@@ -7,9 +7,9 @@ document.getElementById("title").innerHTML ="Manage Subjects";
 	<form method="post" action="ManageSubjects">
 		<label for="subjectName">Subject Name</label>
 		<input type="text" id="subjectName"><br>
-		<label for="subjectName">Subject Standard</label>
+		<label for="subjectStandard">Subject Standard</label>
 		<input type="text" id="subjectStandard"><br>
-		<label for="subjectName">Subject Stream</label>		
+		<label for="subjectStream">Subject Stream</label>		
 		<input type="text" id="subjectStream"><br>
 		<input type="submit" value="Add Subject"><br>
 	</form>

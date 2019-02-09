@@ -39,9 +39,10 @@ public class Profile extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserDaos ud = new UserDaos();
 		// for testing purpose
-		session.setAttribute("uid", 1);
+		int uid1=2;
+		session.setAttribute("uid", uid1);
 		
-		session.setAttribute("userType", ud.getUserTypeByUId(1));
+		session.setAttribute("userType", ud.getUserTypeByUId(uid1));
 		
 		
 		int uid = (int)session.getAttribute("uid");

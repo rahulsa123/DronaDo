@@ -5,8 +5,6 @@
 <jsp:include page="Head.jsp" flush="true"></jsp:include>
 <script type="text/javascript">
 document.getElementById("title").innerHTML =" Title of page";
-
-
 </script>
 <body>
 <jsp:include page="TopAndSideMenu.jsp" flush="true"></jsp:include>

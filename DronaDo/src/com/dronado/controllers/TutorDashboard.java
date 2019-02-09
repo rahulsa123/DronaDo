@@ -8,18 +8,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.dronado.daos.UserDaos;
 
 /**
- * Servlet implementation class EditSubject
+ * Servlet implementation class TutorDashboard
  */
-@WebServlet("/ManageSubjects")
-public class ManageSubjects extends HttpServlet {
+@WebServlet("/TutorDashboard")
+public class TutorDashboard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManageSubjects() {
+    public TutorDashboard() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,14 +39,17 @@ public class ManageSubjects extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		if(request.getAttribute("manageSubjectsOperation").equals("create")) {
-			
-		}
-		request.setAttribute("title", "Dashboard - Manage Subjects");
-		request.setAttribute("mainPartFile", "ManageSubjects.jsp");
+		//doGet(request, response);
+		HttpSession session = request.getSession();
+		UserDaos ud = new UserDaos();
+		// for testing purpose
+		int uid1=1;
+		session.setAttribute("uid", uid1);
+		session.setAttribute("userType", ud.getUserTypeByUId(uid1));
+		
+		int uid = (int)session.getAttribute("uid");
 		RequestDispatcher rs = request.getRequestDispatcher("/pages/Dashboard.jsp");
 		rs.forward(request, response);
 	}
