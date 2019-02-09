@@ -163,8 +163,68 @@ public class TutorDaos {
 		return t;
 	}
 	
+	public ArrayList<Integer> getTuSubjects(int uid){
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		ArrayList<Integer> tuSubjects = new ArrayList<Integer>();
+		try {
+			String sql = "SELECT tusubjects FROM tutor WHERE uid = ?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setInt(1, uid);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				for (String s: rs.getString("tusubjects").split(","))
+					tuSubjects.add(Integer.parseInt(s));
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			cp.putConnection(c);
+		}
+		return tuSubjects;
+	}
+	public String getTuSubjectsInString(int uid){
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		String tuSubjects = "";
+		try {
+			String sql = "SELECT tusubjects FROM tutor WHERE uid = ?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setInt(1, uid);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				tuSubjects = rs.getString("tusubjects");
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			cp.putConnection(c);
+		}
+		return tuSubjects;
+	}
 	
-	
+	public void addSubject(int sid, int uid) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		try {
+			String tuSubjects = getTuSubjectsInString(uid);
+			String sql = "UPDATE tutor SET tusubjects=? WHERE uid=?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			if(tuSubjects.length()==0)
+				ps.setString(1,sid+"");
+			else
+				ps.setString(1, tuSubjects + "," + sid);
+			ps.setInt(2, uid);
+			ps.executeUpdate();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			cp.putConnection(c);
+		}
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

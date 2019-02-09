@@ -1,5 +1,7 @@
 package com.dronado.pojos;
 
+import java.util.ArrayList;
+
 public class Tutor extends User{
 	protected int tuId;
 	protected String tuFullName;
@@ -8,6 +10,7 @@ public class Tutor extends User{
 	protected String tuAddress;
 	protected String qualification;
 	protected int tuAddressId;
+	protected ArrayList<Integer> tuSubjects;
 	
 	public Tutor() {
 		super();
@@ -174,6 +177,16 @@ public Tutor( String tuFullName, String tuEmail, String tuPhoneNo, String tuAddr
 		return "Tutor [tuId=" + tuId + ", tuFullName=" + tuFullName + ", tuEmail=" + tuEmail + ", tuPhoneNo="
 				+ tuPhoneNo + ", tuAddress=" + tuAddress + ", qualification=" + qualification + ", tuAddressId="
 				+ tuAddressId + "]";
+	}
+
+
+	public ArrayList<Integer> getTuSubjects() {
+		return tuSubjects;
+	}
+
+
+	public void setTuSubjects(ArrayList<Integer> tusubjects) {
+		this.tuSubjects = tusubjects;
 	}
 
 	

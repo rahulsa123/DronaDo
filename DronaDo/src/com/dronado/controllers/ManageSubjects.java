@@ -8,6 +8,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.dronado.daos.SubjectDaos;
+import com.dronado.daos.TeachesDaos;
+import com.dronado.daos.TutorDaos;
+import com.dronado.daos.UserDaos;
+import com.dronado.pojos.Subject;
+import com.dronado.pojos.Teaches;
 
 /**
  * Servlet implementation class EditSubject
@@ -39,9 +47,26 @@ public class ManageSubjects extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		if(request.getAttribute("manageSubjectsOperation").equals("create")) {
-			
+		int uid1=1;
+		HttpSession session = request.getSession();
+		UserDaos ud = new UserDaos();
+		session.setAttribute("uid", uid1);
+		session.setAttribute("userType", ud.getUserTypeByUId(uid1));
+		
+		
+		
+		if(request.getParameter("manageSubjectsOperation")!=null && request.getParameter("manageSubjectsOperation").equals("add")) {
+			String subjectName = request.getParameter("subjectName");
+			String subjectStandard = request.getParameter("subjectStandard");
+			String subjectStream = request.getParameter("subjectStream");
+			SubjectDaos sd = new SubjectDaos();
+			int sid = sd.checkExistance(subjectName, subjectStream, subjectStandard);
+			if(sid!=-1)
+				sid = sd.insert(new Subject(0,subjectName,subjectStandard,subjectStream));
+			TutorDaos td = new TutorDaos();
+			td.addSubject(sid,(int)session.getAttribute("uid"));
 		}
+		SubjectDaos sd = new SubjectDaos();
 		request.setAttribute("title", "Dashboard - Manage Subjects");
 		request.setAttribute("mainPartFile", "ManageSubjects.jsp");
 		RequestDispatcher rs = request.getRequestDispatcher("/pages/Dashboard.jsp");

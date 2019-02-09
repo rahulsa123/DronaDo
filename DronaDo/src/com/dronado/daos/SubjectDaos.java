@@ -33,7 +33,27 @@ public class SubjectDaos {
 		}
 		return id;
 	}
-	
+	public int checkExistance (String sName,String sStream, String sStandard) {
+		ConnectionPool pool = ConnectionPool.getInstance();
+		Connection conn = pool.getConnection();
+		int sid = -1;
+		try {
+			String sql = "SELECT sid FROM subject WHERE sname = ? AND sstream = ? AND sstandard = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, sName);
+			ps.setString(2, sStream);
+			ps.setString(3, sStandard);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next())
+				sid = rs.getInt("sid");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			pool.putConnection(conn);
+		}
+		
+		return sid;
+	}
 	public ArrayList<Subject> getSubjectsByStream(String stream) {
 		ConnectionPool pool = ConnectionPool.getInstance();
 		Connection conn = pool.getConnection();
