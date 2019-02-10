@@ -38,11 +38,10 @@ public class Profile extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		UserDaos ud = new UserDaos();
-		// for testing purpose
-		int uid1=2;
-		session.setAttribute("uid", uid1);
 		
-		session.setAttribute("userType", ud.getUserTypeByUId(uid1));
+		int uid1= (Integer)session.getAttribute("uid");
+		
+		
 		
 		
 		int uid = (int)session.getAttribute("uid");
@@ -106,7 +105,9 @@ public class Profile extends HttpServlet {
 		}
 	//System.out.println(uid);
 		//System.out.println(request.getAttribute("fullName"));
-		RequestDispatcher rs = request.getRequestDispatcher("/pages/Profile.jsp");
+		request.setAttribute("title", "Dashboard - Edit Profile");
+		request.setAttribute("mainPartFile", "Profile.jsp");
+		RequestDispatcher rs = request.getRequestDispatcher("/pages/Dashboard.jsp");
 		rs.forward(request, response);
 	}
 

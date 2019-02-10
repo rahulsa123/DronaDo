@@ -1,17 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" session="true"%>
 <!DOCTYPE html>
-<html>
-<jsp:include page="Head.jsp" flush="true"></jsp:include>
-<script type="text/javascript">
-document.getElementById("title").innerHTML ="Profile";
-</script>
+<html> 
 <body>
-<jsp:include page="TopAndSideMenu.jsp" flush="true"></jsp:include>
-<div class ="MainPart">
+<script type="text/javascript">
 		
-		<script type="text/javascript">
-		document.getElementById("user").setAttribute("src", "/DronaDo/img/face.png");
 		//to change user image in side bar change second value
 		function sendData() {
 			var b=confirm("New Data\n"+document.getElementById("fullName").value+"\n"+document.getElementById("email").value+"\n"+document.getElementById("phoneNo").value+"\n"+document.getElementById("address").value+"\n"+document.getElementById("qualification").value);
@@ -21,15 +14,7 @@ document.getElementById("title").innerHTML ="Profile";
 			}
 			
 		}
-		</script>
-	
-<!-- 
-
-		put code below this block
-
-
- -->
- 
+</script>
 
  <h1>Hello <%= (String)request.getAttribute("userType") %> </h1>
  <table class="table">
@@ -133,18 +118,5 @@ document.getElementById("title").innerHTML ="Profile";
  
  
  </script>
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-</div>
-<jsp:include page="Bottom.jsp" flush="true"></jsp:include>
-</body>
+ </body>
 </html>

@@ -72,7 +72,7 @@
 			<li><a href="/DronaDo/Profile"> <i class="fas fa-user-tie"></i>
 					Edit Profile
 			</a></li>
-			<li><a href="#"> <i class="fas fa-search"></i> Search Tutor
+			<li><a href="/DronaDo/SearchTutor"> <i class="fas fa-search"></i> Search Tutor
 			</a></li>
 			<li><a href="#"> <i class="fas fa-bell"></i> Notifications
 			</a></li>
