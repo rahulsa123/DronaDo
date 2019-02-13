@@ -1,28 +1,32 @@
 package com.dronado.controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.dronado.daos.UserDaos;
+import com.dronado.daos.TutorDaos;
+import com.dronado.pojos.Tutor;
+import com.dronado.pojos.TutorJson;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
- * Servlet implementation class StudentServlet
+ * Servlet implementation class SearchTutorJson
  */
-@WebServlet("/StudentDashboard")
-public class StudentDashboard extends HttpServlet {
+@WebServlet("/SearchTutorJson")
+public class SearchTutorJson extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StudentDashboard() {
+    public SearchTutorJson() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,17 +35,19 @@ public class StudentDashboard extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//doGet(request, response);
-		HttpSession session = request.getSession();
-		UserDaos ud = new UserDaos();
-		// for testing purpose
-		int uid1=2;
-		session.setAttribute("uid", uid1);
-		session.setAttribute("userType", ud.getUserTypeByUId(uid1));
-		
-		int uid = (int)session.getAttribute("uid");
-		RequestDispatcher rs = request.getRequestDispatcher("/pages/Dashboard.jsp");
-		rs.forward(request, response);
+		// TODO Auto-generated method stub
+		response.setContentType("application/json");
+		PrintWriter out = response.getWriter();
+		TutorDaos td = new TutorDaos();
+		ArrayList<Tutor> array = td.findAllTutor();
+		TutorJson tj = new TutorJson();
+		tj.setiTotalDisplayRecords(array.size());
+		tj.setiTotalRecords(array.size());
+		tj.setAaData(array);
+		Gson gs = new GsonBuilder().setPrettyPrinting().create();
+		String dataInJson = gs.toJson(tj);
+		//System.out.println(dataInJson);
+		out.print(dataInJson);
 	}
 
 	/**

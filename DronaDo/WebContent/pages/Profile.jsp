@@ -7,17 +7,27 @@
 		
 		//to change user image in side bar change second value
 		function sendData() {
-			var b=confirm("New Data\n"+document.getElementById("fullName").value+"\n"+document.getElementById("email").value+"\n"+document.getElementById("phoneNo").value+"\n"+document.getElementById("address").value+"\n"+document.getElementById("qualification").value);
+			var ref ="Name :"+document.getElementById("fullName").value+"\nEmail:"+document.getElementById("email").value+"\nPhone NO :"+document.getElementById("phoneNo").value+"\nAddress :"+document.getElementById("address").value;
+			if(document.getElementById("qualification").value!=""){
+				ref+="\nQualification"+document.getElementById("qualification").value;
+			}
+			var b=confirm(ref);
 			if(b){
-				alert("hell");
+				
 				document.forms["editForm"].submit();
 			}
 			
 		}
 </script>
 
- <h1>Hello <%= (String)request.getAttribute("userType") %> </h1>
+ 
+ <div class ="table-responsive">
  <table class="table">
+ <tr>
+ 	<th colspan="2">
+ 	<h1>Hello <%= (String)request.getAttribute("userType") %> </h1>
+ 	</th>
+ </tr>
  <tr>
  	<td>Full Name : </td>
  	<td> <%=(String)request.getAttribute("fullName") %></td>
@@ -40,15 +50,22 @@
  	<td> <%= (String)request.getAttribute("qualification") %></td>
  </tr>
  <% } %>
- </table><br>
+ </table >
+ </div>
+ <br>
  
- <input type="button" id="edit" name="edit" value="Edit" >
+ <input type="button" class="btn btn-primary" id="edit" name="edit" value="Edit" >
  <form id="editForm" name ="editForm" action="/DronaDo/Profile" method="post" style="display:none;">
  <input type="hidden" id="operation" name="operation" value="None" >
- <table>
+ <table class="table">
+ <tr>
+ <th colspan="2">
+ <h1>Edit Profile</h1>
+ </th>
+ </tr>
  <tr>
  <td>
- Enter New Name:
+	New Name:
  </td>
  <td>
  <input type="text" id="fullName" name="fullName" value="<%=(String)request.getAttribute("fullName") %>">
@@ -56,7 +73,7 @@
  </tr>
  <tr>
  <td>
- Enter New Email:
+ New Email:
  </td>
  <td>
  <input type="text" name ="email" id ="email" value="<%=(String)request.getAttribute("email") %>">
@@ -64,7 +81,7 @@
  </tr> 
   <tr>
  <td>
- Enter New PhoneNo:
+  New PhoneNo:
  </td>
  <td>
  <input type="text" name="phoneNo" id="phoneNo" value="<%=(String)request.getAttribute("phoneNo") %>">
@@ -72,7 +89,7 @@
  </tr>
   <tr>
  <td>
- Enter New Address:
+New Address:
  </td>
  <td>
  <input type="text" name ="address" id ="address" value="<%=(String)request.getAttribute("address") %>">
@@ -82,7 +99,7 @@
  <% if(request.getAttribute("qualification")!=null &&!request.getAttribute("qualification").equals("")){ %>
   <tr>
  <td>
- Enter New Qualification:
+ New Qualification:
  </td>
  <td>
  <input type="text" name="qualification" id="qualification" value="<%=(String)request.getAttribute("qualification") %>">
@@ -98,7 +115,7 @@
  
  <% } %>
  </table>
- <input type="button" value="Submit" onclick="sendData();">
+ <input type="button" class="btn btn-primary" value="Submit" onclick="sendData();">
  
  </form>
  

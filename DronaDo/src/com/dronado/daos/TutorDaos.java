@@ -225,7 +225,30 @@ public class TutorDaos {
 			cp.putConnection(c);
 		}
 	}
-	
+	public ArrayList<Tutor> findAllTutor(){
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		ArrayList <Tutor> array = new ArrayList<>();
+		UserDaos ud = new UserDaos();
+		try {
+			String sql = "select * from Tutor";
+			PreparedStatement pd = c.prepareStatement(sql);
+			ResultSet rs = pd.executeQuery();
+			while(rs.next()) {
+				Tutor t = new Tutor(rs.getInt("tuId"), rs.getInt("uid"), rs.getString("tuFullName"), rs.getString("tuEmail"), rs.getString("tuPhoneNo"), rs.getString("tuAddress"), rs.getString("qualification"), rs.getInt("tuAddressId"));
+				t.setUsername(ud.getUsernameByUId(t.getUId()));
+			
+				t.setUserType("tutor");
+				array.add(t);
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error in TutorDaos.findByAddressId" +e);
+		}finally {
+			cp.putConnection(c);
+		}
+		return array;
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		TutorDaos td = new TutorDaos();
