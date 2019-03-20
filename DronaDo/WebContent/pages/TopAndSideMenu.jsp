@@ -2,7 +2,7 @@
 <!-- jQuery CDN - Slim version (=without AJAX) 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
 
-
+ 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- Popper.JS -->
@@ -42,7 +42,7 @@
 				if (session.getAttribute("userType") != null
 						&& ((String) session.getAttribute("userType")).equalsIgnoreCase("tutor")) {
 			%>
-			<li><a href="#"> <i class="fa fa-bars"></i> Dashboard
+			<li><a href="/DronaDo/TutorDashboard"> <i class="fa fa-bars"></i> Dashboard
 			</a></li>
 			<li><a href="/DronaDo/Profile"> <i class="fas fa-user-tie"></i>
 					Edit Profile
@@ -67,18 +67,23 @@
 				if (session.getAttribute("userType") != null
 						&& ((String) session.getAttribute("userType")).equalsIgnoreCase("student")) {
 			%>
-			<li><a href="#"> <i class="fa fa-bars"></i> Dashboard
+			<li><a href="/DronaDo/StudentDashboard"> <i class="fa fa-bars"></i> Dashboard
 			</a></li>
 			<li><a href="/DronaDo/Profile"> <i class="fas fa-user-tie"></i>
 					Edit Profile
 			</a></li>
 			<li><a href="/DronaDo/SearchTutor"> <i class="fas fa-search"></i> Search Tutor
 			</a></li>
+			<li><a href="/DronaDo/TutorNearYou"> <i class="fas fa-street-view"></i> Tutor Near You
+			</a></li>
 			<li><a href="#"> <i class="fas fa-bell"></i> Notifications
 			</a></li>
 			<li><a href="#"> <i class="fa fa-pie-chart"></i> Class
 					Status
 			</a></li>
+			
+			
+			
 
 			<%
 				}

@@ -132,17 +132,35 @@ public class AddressDaos {
 		return array;
 	}
 	
+	public void updateLatitudeAndLongitudeByAddressId(int addressId , float latitude,float longitude) {
+		ConnectionPool cp =  ConnectionPool.getInstance();
+		Connection c  =  cp.getConnection();
+		try {
+			String sql = " update address set latitude = ?,longitude =? where addressid =?";
+			PreparedStatement pd = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pd.setFloat(1, latitude);
+			pd.setFloat(2, longitude);
+			pd.setInt(3, addressId);
+			pd.executeUpdate();
+		}catch (Exception e) {
+			System.out.println("Error in AddressDaos.updateLatitudeAndLongitudeByAddressId "+e);
+		}finally {
+			cp.putConnection(c);
+		}
+		
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		AddressDaos ad = new AddressDaos();
-//		Address a = new Address(-80.99f, 76.98f);
-//		ad.insert(a);
-	Student s = new Student();
+		//AddressDaos ad = new AddressDaos();
+		//Address a = new Address(20.999f,20.999f);
+		//ad.insert(a);
+		//ad.updateLatitudeAndLongitudeByAddressId(3,26.9999f,22.90909f);
+//	Student s = new Student();
 //		s.setStudAddressId(1);
-		for (Tutor t : ad.findAllNearTutor(s, 5.0f)) {
-			System.out.println(t);
-		}
-		System.out.println("rahul");
+//		for (Tutor t : ad.findAllNearTutor(s, 5.0f)) {
+//			System.out.println(t);
+//		}
+//		System.out.println("rahul");
 		//a.setAddressId(1);
 //		ad.edit(a);
 		//System.out.println(ad.findByAddressId(2));

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.dronado.pojos.Address;
 import com.dronado.pojos.Student;
 import com.dronado.pojos.Tutor;
 import com.dronado.utilities.ConnectionPool;
@@ -139,7 +140,11 @@ public class StudentDaos {
 	
 	public static void main(String [] args) {
 		StudentDaos sd = new StudentDaos();
-		Student s = sd.findByUId(18);
-		System.out.println(s+" "+s.getUId()+" "+" "+s.getUsername()+" "+s.getPassword()+" "+s.getUserType());
+		AddressDaos ad = new AddressDaos();
+		Student s = new Student("Rajendra", "Rajendra23100@gmail.com", "9988776655", "bhopal mp", ad.insert(new Address(27.8989f, 79.8989f)));
+		s.setUsername("Rajendra200");
+		s.setPassword("Rajendra");
+		s.setUserType("Student");
+		sd.insert(s);
 	}
 }

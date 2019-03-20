@@ -45,13 +45,13 @@ public class TutorDashboard extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserDaos ud = new UserDaos();
 		// for testing purpose
-		int uid1=1;
+		int uid1=4;
 		session.setAttribute("uid", uid1);
 		session.setAttribute("userType", ud.getUserTypeByUId(uid1));
 		
 		int uid = (int)session.getAttribute("uid");
 		RequestDispatcher rs = request.getRequestDispatcher("/pages/Dashboard.jsp");
-		rs.forward(request, response);
+		rs.forward(request, response); 
 	}
 
 }

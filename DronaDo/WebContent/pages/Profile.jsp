@@ -6,20 +6,24 @@
 <script type="text/javascript">
 		
 		//to change user image in side bar change second value
-		function sendData() {
-			var ref ="Name :"+document.getElementById("fullName").value+"\nEmail:"+document.getElementById("email").value+"\nPhone NO :"+document.getElementById("phoneNo").value+"\nAddress :"+document.getElementById("address").value;
-			if(document.getElementById("qualification").value!=""){
-				ref+="\nQualification"+document.getElementById("qualification").value;
-			}
-			var b=confirm(ref);
-			if(b){
-				
-				document.forms["editForm"].submit();
-			}
-			
+		 // To send data
+		 
+  function sendData() {
+		var ref ="Name :"+document.getElementById("fullName").value+"\nEmail:"+document.getElementById("email").value+"\nPhone NO :"+document.getElementById("phoneNo").value+"\nAddress :"+document.getElementById("address").value;
+		if(document.getElementById("qualification").value!=""){
+			ref+="\nQualification :"+document.getElementById("qualification").value;
 		}
+		
+		var b=confirm(ref);
+		alert("Your current location is saved");
+		if(b){
+			
+			document.forms["editing_form"].submit();
+		}
+		
+	}
+		
 </script>
-
  
  <div class ="table-responsive">
  <table class="table">
@@ -50,12 +54,22 @@
  	<td> <%= (String)request.getAttribute("qualification") %></td>
  </tr>
  <% } %>
+ 
+ <tr>
+ <td colspan="2">
+ 	<input type="hidden" id= "latitude" value="<%= request.getAttribute("latitude") %>">
+ 	<input type="hidden" id= "longitude"  value="<%= request.getAttribute("longitude") %>">
+ 	<div id="map">
+ 	</div>
+ 
+ </td>
+ </tr>
  </table >
  </div>
  <br>
  
  <input type="button" class="btn btn-primary" id="edit" name="edit" value="Edit" >
- <form id="editForm" name ="editForm" action="/DronaDo/Profile" method="post" style="display:none;">
+ <form id="editing_form" name ="editing_form" action="/DronaDo/Profile" method="post" style="display:none">
  <input type="hidden" id="operation" name="operation" value="None" >
  <table class="table">
  <tr>
@@ -95,7 +109,13 @@ New Address:
  <input type="text" name ="address" id ="address" value="<%=(String)request.getAttribute("address") %>">
  </td>
  </tr>
- 
+ <tr>
+ <td> Add new Location </td>
+ <td> <input type="button" value="Get Current Location" onclick="getLocation()">
+ <input type="hidden" id="new_latitude" name="new_latitude" >
+ <input type="hidden" id="new_longitude" name="new_longitude">
+ 	</td>
+ </tr>
  <% if(request.getAttribute("qualification")!=null &&!request.getAttribute("qualification").equals("")){ %>
   <tr>
  <td>
@@ -111,15 +131,17 @@ New Address:
  <input type="hidden" name="qualification" id="qualification" value="<%=(String)request.getAttribute("qualification") %>">
  </td>
  </tr>
- 
- 
  <% } %>
+ 
+ <tr>
+ 	<th colspan="2"><input type="button" class="btn btn-primary" value="Submit" onclick="sendData();"></th>
+ </tr>
  </table>
- <input type="button" class="btn btn-primary" value="Submit" onclick="sendData();">
- 
  </form>
- 
+ <br> 
+
  <script type="text/javascript">
+ 
  $(document).ready(function(){
 	
 	 $("#edit").on("click",function(){
@@ -128,12 +150,13 @@ New Address:
 		 }else{
 			 document.getElementById("operation").value="edit";
 		 }
-		 $("#editForm").toggle();
+		 $("#editing_form").toggle();
 	 });
 	 
  });
- 
- 
  </script>
+ <script type="text/javascript" src="/DronaDo/pages/location.js"></script>
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyGiXClmvyhTyROW-N9yKodcoxUk_3bgI&libraries=places&callback=initMap"
+    async defer></script>
  </body>
 </html>

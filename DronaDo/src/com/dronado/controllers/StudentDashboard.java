@@ -35,7 +35,7 @@ public class StudentDashboard extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserDaos ud = new UserDaos();
 		// for testing purpose
-		int uid1=2;
+		int uid1=7;
 		session.setAttribute("uid", uid1);
 		session.setAttribute("userType", ud.getUserTypeByUId(uid1));
 		

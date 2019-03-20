@@ -18,7 +18,6 @@ $(document).ready(function(){
 			{ data:"tuEmail" },
 			{ data:"qualification" },
 			{ data:"tuAddress" },
-			
 		]
 	});
 	

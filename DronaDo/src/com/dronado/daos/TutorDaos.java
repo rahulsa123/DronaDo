@@ -236,6 +236,7 @@ public class TutorDaos {
 			ResultSet rs = pd.executeQuery();
 			while(rs.next()) {
 				Tutor t = new Tutor(rs.getInt("tuId"), rs.getInt("uid"), rs.getString("tuFullName"), rs.getString("tuEmail"), rs.getString("tuPhoneNo"), rs.getString("tuAddress"), rs.getString("qualification"), rs.getInt("tuAddressId"));
+				
 				t.setUsername(ud.getUsernameByUId(t.getUId()));
 			
 				t.setUserType("tutor");
