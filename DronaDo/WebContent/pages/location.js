@@ -19,15 +19,16 @@
   
 // for new map 
   function getLocation() {
+	 // alert(navigator.geolocation);
 	  if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
         	  document.getElementById("new_latitude").value = position.coords.latitude;
         	  document.getElementById("new_longitude").value = position.coords.longitude;
-        	  //alert("new latitude and longitude");
-        	  //alert(document.getElementById("new_latitude").value);
+        	 // alert("new latitude and longitude");
+        	 // alert(document.getElementById("new_latitude").value);
         	  //alert(document.getElementById("new_longitude").value);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
+          }, function(error) {
+        	  alert('ERROR(' + error.code + '): ' + error.message);
           });
      }else{
     	 alert("Error: Your browser doesn\'t support geolocation.");

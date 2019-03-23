@@ -48,7 +48,7 @@ function loadMapWithMarker(){
 </head>
 <body>
 <div class ="container">
-<div class ="font-weight-bolder font-italic">Tutor Near You</div>
+<h1 class="font-italic  ml-3">Tutor Near You</h1>
 <div class="container" id="map" style="width:100%;" ></div>
 
 <%

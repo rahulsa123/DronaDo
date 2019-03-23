@@ -15,7 +15,7 @@
 		}
 		
 		var b=confirm(ref);
-		alert("Your current location is saved");
+		//alert("Your current location is saved");
 		if(b){
 			
 			document.forms["editing_form"].submit();
@@ -24,9 +24,14 @@
 	}
 		
 </script>
- 
- <div class ="table-responsive">
- <table class="table">
+ <% if((Boolean)request.getAttribute("edit")){%>
+ 	<div class="alert alert-success alert-dismissible">
+ 	<button type="button" class="close" data-dismiss="alert">&times;</button>
+  	<strong>Success!</strong> Profile is updated!!!
+	</div>
+ <%} %>
+ <div class ="table-responsive ">
+ <table class="table table-hover ">
  <tr>
  	<th colspan="2">
  	<h1>Hello <%= (String)request.getAttribute("userType") %> </h1>
@@ -59,7 +64,7 @@
  <td colspan="2">
  	<input type="hidden" id= "latitude" value="<%= request.getAttribute("latitude") %>">
  	<input type="hidden" id= "longitude"  value="<%= request.getAttribute("longitude") %>">
- 	<div id="map">
+ 	<div id="map" style="width:100%;">
  	</div>
  
  </td>
@@ -69,7 +74,7 @@
  <br>
  
  <input type="button" class="btn btn-primary" id="edit" name="edit" value="Edit" >
- <form id="editing_form" name ="editing_form" action="/DronaDo/Profile" method="post" style="display:none">
+ <form id="editing_form"  name ="editing_form" action="/DronaDo/Profile" method="post" style="display:none">
  <input type="hidden" id="operation" name="operation" value="None" >
  <table class="table">
  <tr>
@@ -82,7 +87,7 @@
 	New Name:
  </td>
  <td>
- <input type="text" id="fullName" name="fullName" value="<%=(String)request.getAttribute("fullName") %>">
+ <input type="text" class="form-control" id="fullName" name="fullName" value="<%=(String)request.getAttribute("fullName") %>">
  </td>
  </tr>
  <tr>
@@ -90,7 +95,7 @@
  New Email:
  </td>
  <td>
- <input type="text" name ="email" id ="email" value="<%=(String)request.getAttribute("email") %>">
+ <input type="email" class="form-control" name ="email" id ="email" value="<%=(String)request.getAttribute("email") %>">
  </td>
  </tr> 
   <tr>
@@ -98,7 +103,7 @@
   New PhoneNo:
  </td>
  <td>
- <input type="text" name="phoneNo" id="phoneNo" value="<%=(String)request.getAttribute("phoneNo") %>">
+ <input type="text" class="form-control" name="phoneNo" id="phoneNo" value="<%=(String)request.getAttribute("phoneNo") %>">
  </td>
  </tr>
   <tr>
@@ -106,12 +111,12 @@
 New Address:
  </td>
  <td>
- <input type="text" name ="address" id ="address" value="<%=(String)request.getAttribute("address") %>">
+ <input type="text" class="form-control" name ="address" id ="address" value="<%=(String)request.getAttribute("address") %>">
  </td>
  </tr>
  <tr>
  <td> Add new Location </td>
- <td> <input type="button" value="Get Current Location" onclick="getLocation()">
+ <td> <input type="button" class="btn btn-primary" value="Get Current Location" onclick="getLocation()">
  <input type="hidden" id="new_latitude" name="new_latitude" >
  <input type="hidden" id="new_longitude" name="new_longitude">
  	</td>
@@ -122,11 +127,11 @@ New Address:
  New Qualification:
  </td>
  <td>
- <input type="text" name="qualification" id="qualification" value="<%=(String)request.getAttribute("qualification") %>">
+ <input type="text" class="form-control" name="qualification" id="qualification" value="<%=(String)request.getAttribute("qualification") %>">
  </td>
  </tr>
  <%} else{%>
-  <tr>
+  <tr style="display:none;">
  <td>
  <input type="hidden" name="qualification" id="qualification" value="<%=(String)request.getAttribute("qualification") %>">
  </td>

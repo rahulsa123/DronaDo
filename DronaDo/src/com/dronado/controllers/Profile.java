@@ -68,8 +68,10 @@ public class Profile extends HttpServlet {
 					}
 					System.out.println(s);
 					sd.edit(s);
+				//alert purpose 
+					request.setAttribute("edit", true);
 				}
-				else if(userType.equalsIgnoreCase("tutor") ) {
+			else if(userType.equalsIgnoreCase("tutor") ) {
 				TutorDaos td = new TutorDaos();
 				AddressDaos ad = new AddressDaos();
 				Tutor t = td.findByUId(uid);
@@ -88,6 +90,11 @@ public class Profile extends HttpServlet {
 				System.out.println(t);
 				td.edit(t);
 				}
+				//alert purpose
+				request.setAttribute("edit", true);
+			}else {
+				//alert purpose
+				request.setAttribute("edit", false);
 			}
 			
 			

@@ -23,12 +23,11 @@
 			<h3>DronaDo</h3>
 			<strong>DD</strong>
 		</div>
-
+		<img id="user" alt="img/default.png" class="center img-fluid mt-2" src="/DronaDo/img/face.png">
 		<ul class="list-unstyled components">
 			<li>
 				<ul>
-					<li class="list-unstyled CTAs"><img id="user"
-						alt="img/default.png" class="center" src="/DronaDo/img/face.png">
+					<li class="list-unstyled CTAs">
 					</li>
 				</ul>
 			</li>
@@ -97,7 +96,7 @@
 	<!-- Page Content  -->
 	<div id="content">
 		<div id="Logo" align="center">
-			<img alt="Logo" src="/DronaDo/img/logo.png">
+			<img alt="Logo" class="img-fluid" src="/DronaDo/img/logo.png">
 		</div>
 		<nav class="navbar navbar-expand-lg navbar-light bg-#e1e6d5">
 			<div class="container-fluid">
