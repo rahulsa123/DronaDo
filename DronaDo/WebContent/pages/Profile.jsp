@@ -74,7 +74,7 @@
  <br>
  
  <input type="button" class="btn btn-primary" id="edit" name="edit" value="Edit" >
- <form id="editing_form"  name ="editing_form" action="/DronaDo/Profile" method="post" style="display:none">
+ <form id="editing_form"  name ="editing_form"  action="/DronaDo/Profile" method="post" style="display:none">
  <input type="hidden" id="operation" name="operation" value="None" >
  <table class="table">
  <tr>
@@ -116,7 +116,7 @@ New Address:
  </tr>
  <tr>
  <td> Add new Location </td>
- <td> <input type="button" class="btn btn-primary" value="Get Current Location" onclick="getLocation()">
+ <td> <input type="button" class="btn btn-primary" value="Get Current Location" onclick="getLocation();">
  <input type="hidden" id="new_latitude" name="new_latitude" >
  <input type="hidden" id="new_longitude" name="new_longitude">
  	</td>
@@ -138,9 +138,23 @@ New Address:
  </tr>
  <% } %>
  
+ 
+ <tr>
+ <td> New Profile Picture </td>
+ <td> 
+  <input type="file" id="profile_pic" name="profile_pic" class="input-default-js btn " data-multiple-target="{target} files selected"
+    multiple>
+   
+ </td>
+ </tr>
+ 
+ 
  <tr>
  	<th colspan="2"><input type="button" class="btn btn-primary" value="Submit" onclick="sendData();"></th>
  </tr>
+ 
+ 
+ 
  </table>
  </form>
  <br> 

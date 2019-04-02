@@ -96,7 +96,7 @@
 	<!-- Page Content  -->
 	<div id="content">
 		<div id="Logo" align="center">
-			<img alt="Logo" class="img-fluid" src="/DronaDo/img/logo.png">
+			
 		</div>
 		<nav class="navbar navbar-expand-lg navbar-light bg-#e1e6d5">
 			<div class="container-fluid">

@@ -19,13 +19,13 @@
   
 // for new map 
   function getLocation() {
-	 // alert(navigator.geolocation);
+	  //alert(navigator.geolocation);
 	  if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
         	  document.getElementById("new_latitude").value = position.coords.latitude;
         	  document.getElementById("new_longitude").value = position.coords.longitude;
-        	 // alert("new latitude and longitude");
-        	 // alert(document.getElementById("new_latitude").value);
+        	  alert("current location found");
+        	  //alert(document.getElementById("new_latitude").value);
         	  //alert(document.getElementById("new_longitude").value);
           }, function(error) {
         	  alert('ERROR(' + error.code + '): ' + error.message);

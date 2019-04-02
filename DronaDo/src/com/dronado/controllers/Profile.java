@@ -1,5 +1,6 @@
 package com.dronado.controllers;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import com.dronado.daos.AddressDaos;
 import com.dronado.daos.StudentDaos;
@@ -40,14 +42,24 @@ public class Profile extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserDaos ud = new UserDaos();
 		
-		
-		
-		
+		//for image 
+//		String appPath = request.getServletContext().getRealPath("");
+//		appPath+=File.separator+"img"+File.separator;
+//		// Profile Image
+//		
+//		Part p =request.getPart("profile_pic");
+//		
+//		System.out.println(p.getSize());
+//		if(p.getSize()>0) {
+//		p.write(appPath+"profile_pic"+uid);
+//		System.out.println(appPath+"profile_pic"+uid);
+//		}
 		int uid = (int)session.getAttribute("uid");
 		if(uid!=0) {
 			// to edit information
 		
 			String operation = request.getParameter("operation");
+			
 		//	System.out.println(operation+request.getParameter("fullName"));
 			if(operation!= null && operation.equalsIgnoreCase("edit")){
 				String userType =ud.getUserTypeByUId(uid);
@@ -69,6 +81,7 @@ public class Profile extends HttpServlet {
 					System.out.println(s);
 					sd.edit(s);
 				//alert purpose 
+					
 					request.setAttribute("edit", true);
 				}
 			else if(userType.equalsIgnoreCase("tutor") ) {
