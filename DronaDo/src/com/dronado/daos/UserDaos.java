@@ -21,19 +21,18 @@ public class UserDaos {
 			pd.setString(3, u.getUserType());
 			pd.executeUpdate();
 			ResultSet rs = pd.getGeneratedKeys();
-			if(rs.next()) {
-			uid = rs.getInt(1);
+			if (rs.next()) {
+				uid = rs.getInt(1);
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error in UserDaos.insert "+e);
-		}finally {
+			System.out.println("Error in UserDaos.insert " + e);
+		} finally {
 			cp.putConnection(c);
 		}
 		return uid;
 	}
-	
-	
+
 	public void remove(int uid) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
@@ -42,15 +41,59 @@ public class UserDaos {
 			PreparedStatement pd = c.prepareStatement(sql);
 			pd.setInt(1, uid);
 			pd.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error in UserDaos.remove "+e);
-		}finally {
+			System.out.println("Error in UserDaos.remove " + e);
+		} finally {
 			cp.putConnection(c);
 		}
-	
+
 	}
-	
+
+	public String getAllStudentUsernameInString() {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		String usernames = "";
+		try {
+			String sql = "SELECT username FROM user where uid IN (SELECT uid FROM student)";
+			Statement s = c.createStatement();
+			ResultSet rs = s.executeQuery(sql);
+			while (rs.next()) {
+				usernames += ",\"" + rs.getString("username") + "\"";
+			}
+			usernames = usernames.substring(1);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error in UserDaos.getAllStudentUsernameInString " + e);
+		} finally {
+			cp.putConnection(c);
+		}
+		return usernames;
+	}
+
+	public String getAllTutorUsernameInString() {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		String usernames = "";
+		try {
+			String sql = "SELECT username FROM user where uid IN (SELECT uid FROM tutor)";
+			Statement s = c.createStatement();
+			ResultSet rs = s.executeQuery(sql);
+			while (rs.next()) {
+				usernames += ",\"" + rs.getString("username") + "\"";
+			}
+			usernames = usernames.substring(1);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error in UserDaos.getAllTutorUsernameInString " + e);
+		} finally {
+			cp.putConnection(c);
+		}
+		return usernames;
+	}
+
 	public String getUsernameByUId(int uId) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
@@ -63,119 +106,144 @@ public class UserDaos {
 			if (rs.next()) {
 				username = rs.getString("username");
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error in UserDaos.getUsernameByUId "+e);
-		}finally {
+			System.out.println("Error in UserDaos.getUsernameByUId " + e);
+		} finally {
 			cp.putConnection(c);
 		}
 		return username;
 	}
-	public void editPasswordByUId(int uId,String password) {
+
+	public void editPasswordByUId(int uId, String password) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
 		try {
-			String sql ="update user set password =? where uid=?";
+			String sql = "update user set password =? where uid=?";
 			PreparedStatement pd = c.prepareStatement(sql);
 			pd.setString(1, password);
 			pd.setInt(2, uId);
 			pd.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error in  editPasswordByUId "+e);
-		}finally {
+			System.out.println("Error in  editPasswordByUId " + e);
+		} finally {
 			cp.putConnection(c);
 		}
 	}
-public String getPasswordByUId(int uId) {
-	ConnectionPool cp = ConnectionPool.getInstance();
-	Connection c = cp.getConnection();
-	String password = null;
-	try {
-		String sql = "select * from user where uid=?";
-		PreparedStatement pd = c.prepareStatement(sql);
-		pd.setInt(1, uId);
-		ResultSet rs = pd.executeQuery();
-		if (rs.next()) {
-			password = rs.getString("Password");
-		}
-	}catch (Exception e) {
-		// TODO: handle exception
-		System.out.println("Error in UserDaos.getPasswordByUId "+e);
-	}finally {
-		cp.putConnection(c);
-	}
-	return password;
-	}
 
-public String getUserTypeByUId(int uId) {
-	ConnectionPool cp = ConnectionPool.getInstance();
-	Connection c = cp.getConnection();
-	String userType = null;
-	try {
-		String sql = "select * from user where uid=?";
-		PreparedStatement pd = c.prepareStatement(sql);
-		pd.setInt(1, uId);
-		ResultSet rs = pd.executeQuery();
-		if (rs.next()) {
-			userType = rs.getString("userType");
-		}
-	}catch (Exception e) {
-		// TODO: handle exception
-		System.out.println("Error in UserDaos.getPasswordByUId "+e);
-	}finally {
-		cp.putConnection(c);
-	}
-	return userType;
-	}
-
-public String getPasswordByUsername(String username) {
-	ConnectionPool cp = ConnectionPool.getInstance();
-	Connection c = cp.getConnection();
-	String password = null;
-	try {
-		String sql = "select * from user where username=?";
-		PreparedStatement pd = c.prepareStatement(sql);
-		pd.setString(1, username);
-		ResultSet rs = pd.executeQuery();
-		if (rs.next()) {
-			password = rs.getString("Password");
-		}
-	}catch (Exception e) {
-		// TODO: handle exception
-		System.out.println("Error in UserDaos. getPasswordByUsername "+e);
-	}finally {
-		cp.putConnection(c);
-	}
-	return password;
-	}
-public int validUser(String username, String password) {
-	ConnectionPool cp = ConnectionPool.getInstance();
-	Connection c = cp.getConnection();
-	int uId =-1;
-	String pass ;
-	try {
-		String sql = "select * from user where username=?";
-		PreparedStatement pd = c.prepareStatement(sql);
-		pd.setString(1, username);
-		ResultSet rs = pd.executeQuery();
-		if (rs.next()) {
-			pass = rs.getString("Password");
-			if(pass.compareTo(password)==0) {
-			uId = rs.getInt("uId");	
+	public String getPasswordByUId(int uId) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		String password = null;
+		try {
+			String sql = "select * from user where uid=?";
+			PreparedStatement pd = c.prepareStatement(sql);
+			pd.setInt(1, uId);
+			ResultSet rs = pd.executeQuery();
+			if (rs.next()) {
+				password = rs.getString("Password");
 			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error in UserDaos.getPasswordByUId " + e);
+		} finally {
+			cp.putConnection(c);
 		}
-	}catch (Exception e) {
-		// TODO: handle exception
-		System.out.println("Error in UserDaos. getPasswordByUsername "+e);
-	}finally {
-		cp.putConnection(c);
+		return password;
 	}
-	return uId;
-}
-public static void main(String[] args) {
+
+	public String getUserTypeByUId(int uId) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		String userType = null;
+		try {
+			String sql = "select * from user where uid=?";
+			PreparedStatement pd = c.prepareStatement(sql);
+			pd.setInt(1, uId);
+			ResultSet rs = pd.executeQuery();
+			if (rs.next()) {
+				userType = rs.getString("userType");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error in UserDaos.getPasswordByUId " + e);
+		} finally {
+			cp.putConnection(c);
+		}
+		return userType;
+	}
+
+	public int getUidByUsername(String username) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		int uid = -1;
+		try {
+			String sql = "select uid from user where username=?";
+			PreparedStatement pd = c.prepareStatement(sql);
+			pd.setString(1, username);
+			ResultSet rs = pd.executeQuery();
+			if (rs.next()) {
+				uid = rs.getInt("uid");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error in UserDaos.getUidByUsername " + e);
+		} finally {
+			cp.putConnection(c);
+		}
+		return uid;
+	}
+
+	public String getPasswordByUsername(String username) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		String password = null;
+		try {
+			String sql = "select * from user where username=?";
+			PreparedStatement pd = c.prepareStatement(sql);
+			pd.setString(1, username);
+			ResultSet rs = pd.executeQuery();
+			if (rs.next()) {
+				password = rs.getString("Password");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error in UserDaos. getPasswordByUsername " + e);
+		} finally {
+			cp.putConnection(c);
+		}
+		return password;
+	}
+
+	public int validUser(String username, String password) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		int uId = -1;
+		String pass;
+		try {
+			String sql = "select * from user where username=?";
+			PreparedStatement pd = c.prepareStatement(sql);
+			pd.setString(1, username);
+			ResultSet rs = pd.executeQuery();
+			if (rs.next()) {
+				pass = rs.getString("Password");
+				if (pass.compareTo(password) == 0) {
+					uId = rs.getInt("uId");
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error in UserDaos. getPasswordByUsername " + e);
+		} finally {
+			cp.putConnection(c);
+		}
+		return uId;
+	}
+
+	public static void main(String[] args) {
 		UserDaos ud = new UserDaos();
 		System.out.println(ud.validUser("jaya", "jay2a"));
 	}
-	
+
 }

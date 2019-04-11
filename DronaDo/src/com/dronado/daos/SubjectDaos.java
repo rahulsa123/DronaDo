@@ -126,6 +126,44 @@ public class SubjectDaos {
 		return subList;
 	}
 	
+	public String getSubjects() {
+		ConnectionPool pool = ConnectionPool.getInstance();
+		Connection conn = pool.getConnection();
+		String subList = "";
+		try {
+			String sql = "SELECT sname FROM subject;";
+			Statement ps = conn.createStatement();
+			ResultSet rs =ps.executeQuery(sql);
+			while(rs.next()) {
+				subList += ",\""+rs.getString("sname")+"\"";
+			}
+			subList = subList.substring(1);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			pool.putConnection(conn);
+		}
+		return subList;
+	}
+	public String getStreams() {
+		ConnectionPool pool = ConnectionPool.getInstance();
+		Connection conn = pool.getConnection();
+		String streamList = "";
+		try {
+			String sql = "SELECT sstream FROM subject;";
+			Statement ps = conn.createStatement();
+			ResultSet rs =ps.executeQuery(sql);
+			while(rs.next()) {
+				streamList += ",\""+rs.getString("sstream")+"\"";
+			}
+			streamList = streamList.substring(1);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			pool.putConnection(conn);
+		}
+		return streamList;
+	}
 	public Subject getSubjectById(int sid) {
 		ConnectionPool pool = ConnectionPool.getInstance();
 		Connection conn = pool.getConnection();

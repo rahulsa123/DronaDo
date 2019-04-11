@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-
+import java.util.ArrayList;
 
 import com.dronado.pojos.Teaches;
 import com.dronado.utilities.ConnectionPool;
@@ -73,6 +73,35 @@ public class TeachesDaos {
 		}finally {
 			cp.putConnection(conn);
 		}
+	}
+	public ArrayList<Teaches> findAllByTuId(int tuId){
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		ArrayList<Teaches> tList = new ArrayList<Teaches>();
+		try {
+			String sql ="Select * from teaches where tuid =?";
+			PreparedStatement pd = c.prepareStatement(sql);
+			pd.setInt(1, tuId);
+			ResultSet rs = pd.executeQuery();
+			while(rs.next()) {
+				Teaches t = new Teaches();
+				t.settId(rs.getInt("tid"));
+				t.setDuration(rs.getString("duration"));
+				t.setExperience(rs.getString("experience"));
+				t.setFees(rs.getFloat("Fees")) ;
+				t.setsId(rs.getInt("sId"));
+				t.settAddress(rs.getString("tAddress"));
+				t.settAddressId(rs.getInt("tAddressId"));
+				t.setTuId(rs.getInt("tuId"));
+				tList.add(t);
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error in Teaches.findAllByTuId");
+		}finally {
+			cp.putConnection(c);
+		}
+		return tList;
 	}
 	public Teaches findByTId(int tid) {
 		ConnectionPool cp = ConnectionPool.getInstance();

@@ -136,7 +136,7 @@ public class TutorDaos {
 		}
 		return t;
 	}
-	public Tutor findByUId(int tuId) {
+	public Tutor findByUId(int uId) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
 		Tutor t = null;
@@ -144,7 +144,7 @@ public class TutorDaos {
 		try {
 			String sql = "select * from Tutor where uid=?";
 			PreparedStatement pd = c.prepareStatement(sql);
-			pd.setInt(1, tuId);
+			pd.setInt(1, uId);
 			ResultSet rs = pd.executeQuery();
 			if(rs.next()) {
 				t = new Tutor(rs.getString("tuFullName"), rs.getString("tuEmail"), rs.getString("tuPhoneNo"), rs.getString("tuAddress"), rs.getString("qualification"), rs.getInt("tuAddressId"));
@@ -205,7 +205,7 @@ public class TutorDaos {
 		return tuSubjects;
 	}
 	
-	public void addSubject(int sid, int uid) {
+	public void addSubjectByUid(int sid, int uid) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
 		try {
@@ -217,6 +217,26 @@ public class TutorDaos {
 			else
 				ps.setString(1, tuSubjects + "," + sid);
 			ps.setInt(2, uid);
+			ps.executeUpdate();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			cp.putConnection(c);
+		}
+	}
+	public void addSubjectByTuId(int sid, int tuid) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		try {
+			String tuSubjects = getTuSubjectsInString(tuid);
+			String sql = "UPDATE tutor SET tusubjects=? WHERE tuid=?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			if(tuSubjects.length()==0)
+				ps.setString(1,sid+"");
+			else
+				ps.setString(1, tuSubjects + "," + sid);
+			ps.setInt(2, tuid);
 			ps.executeUpdate();
 		}catch (Exception e) {
 			// TODO: handle exception

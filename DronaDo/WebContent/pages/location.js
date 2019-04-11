@@ -23,9 +23,9 @@
           navigator.geolocation.getCurrentPosition(function(position) {
         	  document.getElementById("new_latitude").value = position.coords.latitude;
         	  document.getElementById("new_longitude").value = position.coords.longitude;
-        	  //alert("new latitude and longitude");
-        	  //alert(document.getElementById("new_latitude").value);
-        	  //alert(document.getElementById("new_longitude").value);
+        	  alert("new latitude and longitude");
+        	  alert(document.getElementById("new_latitude").value);
+        	  alert(document.getElementById("new_longitude").value);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
