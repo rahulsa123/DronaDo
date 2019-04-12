@@ -98,9 +98,8 @@ public class SignupServlet extends HttpServlet {
 					System.out.println(s);
 					int sid = sd.insert(s);
 					uid = sd.findByStudId(sid).getUId();
-					request.setAttribute("userType", "student");
-					RequestDispatcher rd = request.getRequestDispatcher("StudentDashboard");
-					rd.forward(request, response);
+					request.getSession().setAttribute("userType", "student");
+					
 
 				} else {
 					String qualification = "";
@@ -128,20 +127,23 @@ public class SignupServlet extends HttpServlet {
 						tdu.insert(new Teaches(0,temp,tid,0,"",address,addressId,"0"));
 					}
 					uid = td.findByTuId(tid).getUId();
-					request.setAttribute("userType", "tutor");
-					RequestDispatcher rd = request.getRequestDispatcher("TutorDashboard");
-					rd.forward(request, response);
+					request.getSession().setAttribute("userType", "tutor");
+					
 				}
 				request.getSession().setAttribute("uid", uid);
 				
 			}
-			else if(ud.getUserTypeByUId(uid).equalsIgnoreCase("tutor")) {
+			if(ud.getUserTypeByUId(uid).equalsIgnoreCase("tutor")) {
+				System.out.println("forwarding tutor");
 				RequestDispatcher rd = request.getRequestDispatcher("TutorDashboard");
 				rd.forward(request, response);
+				System.out.println("forwarded tutor");
 			}
 			else if(ud.getUserTypeByUId(uid).equalsIgnoreCase("student")) {
+				System.out.println("forwarding student");
 				RequestDispatcher rd = request.getRequestDispatcher("StudentDashboard");
 				rd.forward(request, response);
+				System.out.println("forwarded student");
 			}
 		} else {
 			String password = request.getParameter("pass");

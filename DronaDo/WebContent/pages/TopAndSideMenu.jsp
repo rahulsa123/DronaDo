@@ -125,6 +125,10 @@
 				</div>
 			</div>
 		</nav>
-	<div class="MainPart"><jsp:include page="${requestScope.mainPartFile}" flush="true"></jsp:include></div>
+<div class="MainPart">
+<% if ("${requestScope.mainPartFile}" != "null") {%>
+<jsp:include page="${requestScope.mainPartFile}" flush="true"></jsp:include>
+<%} %>
+</div>
 	</div>
 </div>

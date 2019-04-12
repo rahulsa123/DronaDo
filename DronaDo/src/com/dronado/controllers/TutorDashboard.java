@@ -47,8 +47,8 @@ public class TutorDashboard extends HttpServlet {
 		// for testing purpose
 		
 		int uid = (int)session.getAttribute("uid");
-		request.setAttribute("mainPartFile","");
-		RequestDispatcher rs = request.getRequestDispatcher("/DronaDo/pages/Dashboard.jsp");
+		request.setAttribute("mainPartFile","null");
+		RequestDispatcher rs = request.getRequestDispatcher("/pages/Dashboard.jsp");
 		rs.forward(request, response); 
 	}
 

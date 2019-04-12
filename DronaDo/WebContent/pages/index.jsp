@@ -645,12 +645,14 @@
 			$("#authenticationPopup").load("/DronaDo/pages/signup.jsp?infoMessage=${requestScope.infoMessage}");
 		else
 			$("#authenticationPopup").load("/DronaDo/pages/signup.jsp?infoMessage=");
+		document.getElementById("authenticationPopup").style.display = "block";
 	}
 	function showSignIn(){
 		if ("${requestScope.showSignIn}" == "true") 
 			$("#authenticationPopup").load("/DronaDo/pages/signin.jsp?infoMessage=${requestScope.infoMessage}");
 		else
-			$("#authenticationPopup").load("/DronaDo/pages/signin.jsp?infoMessage=");			
+			$("#authenticationPopup").load("/DronaDo/pages/signin.jsp?infoMessage=");
+		document.getElementById("authenticationPopup").style.display = "block";
 	}
 </script>
 </body>
