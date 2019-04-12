@@ -1,5 +1,10 @@
+<%@page import="com.dronado.pojos.Subject"%>
+<%@page import="com.dronado.daos.SubjectDaos"%>
+<%@page import="com.dronado.pojos.Tutor"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.dronado.daos.TutorDaos"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,18 +13,9 @@
 
 <script>
 $(document).ready(function(){
-	$("#tutorTable").dataTable({
-		"bProcessing" : false,
-		"bServerSide" : false,
-		"sort":"position",
-		"sAjaxSource":"/DronaDo/SearchTutorJson",
-		"aoColumns":[
-			{ data:"tuFullName" },
-			{ data:"tuEmail" },
-			{ data:"qualification" },
-			{ data:"tuAddress" },
-		]
-	});
+	$(document).ready( function () {
+	    $('#tutorTable').DataTable();
+	} );
 	
 });
 </script>
@@ -34,8 +30,36 @@ $(document).ready(function(){
 			<th>Email</th>
 			<th>Qualification</th>
 			<th>Address</th>
+			<th>Subject</th>
+			<th>Standard</th>
+			<th>Stream</th>
 		</tr>
 	</thead>
+<tbody>
+<%
+TutorDaos td = new TutorDaos();
+ArrayList<Tutor> allTutor = td.findAllTutor();
+SubjectDaos sd = new SubjectDaos(); 
+ 
+for(Tutor t : allTutor){
+	System.out.println(t.getTuSubjects());	
+	for(int sid : t.getTuSubjects()){
+		Subject s = sd.getSubjectById(sid);
+		
+%>
+
+	<tr>
+	<td><%=t.getTuFullName()%></td>
+	<td><%=t.getTuEmail()%></td>
+	<td><%=t.getQualification()%></td>
+	<td><%=t.getTuAddress()%></td>
+	<td><%=s.getSName()%></td>
+	<td><%=s.getSStandard()%></td>
+	<td><%=s.getSStream()%></td>
+	</tr>
+
+<%}} %>
+</tbody>
 </table>
 </div>
 

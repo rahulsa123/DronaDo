@@ -136,7 +136,7 @@ public class TutorDaos {
 		}
 		return t;
 	}
-	public Tutor findByUId(int tuId) {
+	public Tutor findByUId(int uId) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
 		Tutor t = null;
@@ -144,7 +144,7 @@ public class TutorDaos {
 		try {
 			String sql = "select * from Tutor where uid=?";
 			PreparedStatement pd = c.prepareStatement(sql);
-			pd.setInt(1, tuId);
+			pd.setInt(1, uId);
 			ResultSet rs = pd.executeQuery();
 			if(rs.next()) {
 				t = new Tutor(rs.getString("tuFullName"), rs.getString("tuEmail"), rs.getString("tuPhoneNo"), rs.getString("tuAddress"), rs.getString("qualification"), rs.getInt("tuAddressId"));
@@ -205,7 +205,7 @@ public class TutorDaos {
 		return tuSubjects;
 	}
 	
-	public void addSubject(int sid, int uid) {
+	public void addSubjectByUid(int sid, int uid) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
 		try {
@@ -225,6 +225,26 @@ public class TutorDaos {
 			cp.putConnection(c);
 		}
 	}
+	public void addSubjectByTuId(int sid, int tuid) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		try {
+			String tuSubjects = getTuSubjectsInString(tuid);
+			String sql = "UPDATE tutor SET tusubjects=? WHERE tuid=?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			if(tuSubjects.length()==0)
+				ps.setString(1,sid+"");
+			else
+				ps.setString(1, tuSubjects + "," + sid);
+			ps.setInt(2, tuid);
+			ps.executeUpdate();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			cp.putConnection(c);
+		}
+	}
 	public ArrayList<Tutor> findAllTutor(){
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
@@ -234,9 +254,16 @@ public class TutorDaos {
 			String sql = "select * from Tutor";
 			PreparedStatement pd = c.prepareStatement(sql);
 			ResultSet rs = pd.executeQuery();
+			System.out.println(rs.getFetchSize());
 			while(rs.next()) {
 				Tutor t = new Tutor(rs.getInt("tuId"), rs.getInt("uid"), rs.getString("tuFullName"), rs.getString("tuEmail"), rs.getString("tuPhoneNo"), rs.getString("tuAddress"), rs.getString("qualification"), rs.getInt("tuAddressId"));
-				
+		String[] tusubject = rs.getString("tusubjects").split(",");
+				System.out.println("tusubject"+rs.getString("tusubjects"));
+				ArrayList<Integer> tuSubjectInt = new ArrayList<Integer>();
+				for(int i=0; i<tusubject.length;i++) {
+					tuSubjectInt.add(Integer.parseInt(tusubject[i]));
+				}
+				t.setTuSubjects(tuSubjectInt);
 				t.setUsername(ud.getUsernameByUId(t.getUId()));
 			
 				t.setUserType("tutor");
@@ -244,7 +271,7 @@ public class TutorDaos {
 			}
 		}catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error in TutorDaos.findByAddressId" +e);
+			System.out.println("Error in TutorDaos.findAllTutor" +e);
 		}finally {
 			cp.putConnection(c);
 		}
@@ -253,8 +280,9 @@ public class TutorDaos {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		TutorDaos td = new TutorDaos();
-		for (Tutor t : td.findByAddressId(1)) {
+		for (Tutor t : td.findAllTutor()) {
 			System.out.println(t);
+			System.out.println(t.getTuSubjects());
 		}
 	//System.out.println(td.insert(t));
 	}
