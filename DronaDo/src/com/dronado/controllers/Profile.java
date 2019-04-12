@@ -54,13 +54,15 @@ public class Profile extends HttpServlet {
 //		p.write(appPath+"profile_pic"+uid);
 //		System.out.println(appPath+"profile_pic"+uid);
 //		}
+		
+		
 		int uid = (int)session.getAttribute("uid");
 		if(uid!=0) {
 			// to edit information
-		
+			//Part op = request.getPart("operation");
 			String operation = request.getParameter("operation");
 			
-		//	System.out.println(operation+request.getParameter("fullName"));
+			System.out.println(operation+request.getParameter("fullName"));
 			if(operation!= null && operation.equalsIgnoreCase("edit")){
 				String userType =ud.getUserTypeByUId(uid);
 				if(userType.equalsIgnoreCase("student") || userType.equalsIgnoreCase("Parent")) {

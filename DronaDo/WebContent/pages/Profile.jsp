@@ -60,6 +60,7 @@
  </tr>
  <% } %>
  
+ 
  <tr>
  <td colspan="2">
  	<input type="hidden" id= "latitude" value="<%= request.getAttribute("latitude") %>">
