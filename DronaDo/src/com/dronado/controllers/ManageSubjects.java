@@ -64,7 +64,7 @@ public class ManageSubjects extends HttpServlet {
 			if(sid!=-1)
 				sid = sd.insert(new Subject(0,subjectName,subjectStandard,subjectStream));
 			TutorDaos td = new TutorDaos();
-			td.addSubject(sid,(int)session.getAttribute("uid"));
+			td.addSubjectByUid(sid,(int)session.getAttribute("uid"));
 		}
 		SubjectDaos sd = new SubjectDaos();
 		request.setAttribute("title", "Dashboard - Manage Subjects");

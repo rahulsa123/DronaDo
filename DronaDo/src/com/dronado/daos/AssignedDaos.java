@@ -19,7 +19,7 @@ public class AssignedDaos {
 		Connection c = cp.getConnection();
 		int aid = 0;
 		try {
-			String sql = "insert into assigned(tid,stuid,dateofjoining) values(?,?,?)";
+			String sql = "insert into assigned(tid,studid,dateofjoining) values(?,?,?)";
 			PreparedStatement pd = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pd.setInt(1, a.gettId());
 			pd.setInt(2, a.getStudId());

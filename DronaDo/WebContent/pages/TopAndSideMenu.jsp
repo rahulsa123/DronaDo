@@ -51,7 +51,7 @@
 			</a></li>
 			<li><a href="#"> <i class="fa fa-bookmark"></i> Manage Class
 			</a></li>
-			<li><a href="#"> <i class="fa fa-comments"></i> Message
+			<li><a href="/DronaDo/Notifications"> <i class="fa fa-comments"></i> Notifications
 			</a></li>
 
 			<%
@@ -75,7 +75,7 @@
 			</a></li>
 			<li><a href="/DronaDo/TutorNearYou"> <i class="fas fa-street-view"></i> Tutor Near You
 			</a></li>
-			<li><a href="#"> <i class="fas fa-bell"></i> Notifications
+			<li><a href="/DronaDo/Notifications"> <i class="fas fa-bell"></i> Notifications
 			</a></li>
 			<li><a href="#"> <i class="fa fa-pie-chart"></i> Class
 					Status
@@ -124,6 +124,10 @@
 				</div>
 			</div>
 		</nav>
-	<div class="MainPart"><jsp:include page="${requestScope.mainPartFile}" flush="true"></jsp:include></div>
+<div class="MainPart">
+<% if ("${requestScope.mainPartFile}" != "null") {%>
+<jsp:include page="${requestScope.mainPartFile}" flush="true"></jsp:include>
+<%} %>
+</div>
 	</div>
 </div>

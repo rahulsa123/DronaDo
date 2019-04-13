@@ -6,7 +6,7 @@
 <jsp:include page="Head.jsp" flush="true"></jsp:include>
 <body>
 <jsp:include page="TopAndSideMenu.jsp" flush="true"></jsp:include>
-
+	
 <script type="text/javascript">
 $(document).ready(function () {
     $('#sidebarCollapse').on('click', function () {
