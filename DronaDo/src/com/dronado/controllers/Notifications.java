@@ -127,7 +127,8 @@ public class Notifications extends HttpServlet {
 		rs.forward(request, response);
 		}
 		catch(Exception e) {
-			response.sendRedirect("index.html");
+			System.out.println(e);
+			response.sendRedirect("/DronaDo/pages/index.jsp");
 		}
 		
 	}

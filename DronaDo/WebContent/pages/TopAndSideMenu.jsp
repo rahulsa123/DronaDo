@@ -114,11 +114,11 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="nav navbar-nav ml-auto">
-						<li class="nav-item menu"><a class="nav-link" href="#">Home</a>
+						<li class="nav-item menu"><a class="nav-link" href="/DronaDo/pages/index.jsp">Home</a>
 						</li>
-						<li class="nav-item menu"><a class="nav-link" href="#">About
+						<li class="nav-item menu"><a class="nav-link" href="/DronaDo/pages/index.jsp#team">About
 								Us</a></li>
-						<li class="nav-item menu"><a class="nav-link" href="#">Log-out</a>
+						<li class="nav-item menu"><a class="nav-link" href="/DronaDo/Logout">Log-out</a>
 						</li>
 					</ul>
 				</div>

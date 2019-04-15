@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>DashBoard</title>
+<title>DashBoard</title>1
 </head>
 <body>
 <div class ="fluid">

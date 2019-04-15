@@ -1,3 +1,4 @@
+<%@page import="com.dronado.daos.UserDaos"%>
 <%@page import="com.dronado.pojos.Subject"%>
 <%@page import="com.dronado.daos.SubjectDaos"%>
 <%@page import="com.dronado.pojos.Tutor"%>
@@ -32,6 +33,7 @@ $(document).ready(function(){
 	<thead class="bg-dark">
 		<tr class="text-info">
 			<th >Name</th>
+			<th>Username</th>
 			<th>Email</th>
 			<th>Qualification</th>
 			<th>Address</th>
@@ -45,9 +47,10 @@ $(document).ready(function(){
 TutorDaos td = new TutorDaos();
 ArrayList<Tutor> allTutor = td.findAllTutor();
 SubjectDaos sd = new SubjectDaos(); 
- 
+UserDaos ud = new UserDaos();
 for(Tutor t : allTutor){
 	System.out.println(t.getTuSubjects());	
+	String username = ud.getUsernameByUId(t.getUId());
 	for(int sid : t.getTuSubjects()){
 		Subject s = sd.getSubjectById(sid);
 		
@@ -55,6 +58,7 @@ for(Tutor t : allTutor){
 
 	<tr>
 	<td><%=t.getTuFullName()%></td>
+	<td><%=username%></td>
 	<td><%=t.getTuEmail()%></td>
 	<td><%=t.getQualification()%></td>
 	<td><%=t.getTuAddress()%></td>

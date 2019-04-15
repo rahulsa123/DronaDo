@@ -257,8 +257,9 @@ public class TutorDaos {
 			System.out.println(rs.getFetchSize());
 			while(rs.next()) {
 				Tutor t = new Tutor(rs.getInt("tuId"), rs.getInt("uid"), rs.getString("tuFullName"), rs.getString("tuEmail"), rs.getString("tuPhoneNo"), rs.getString("tuAddress"), rs.getString("qualification"), rs.getInt("tuAddressId"));
-		String[] tusubject = rs.getString("tusubjects").split(",");
-				System.out.println("tusubject"+rs.getString("tusubjects"));
+				t.setUId(rs.getInt("uid"));
+				String[] tusubject = rs.getString("tusubjects").split(",");
+				//System.out.println("tusubject"+rs.getString("tusubjects"));
 				ArrayList<Integer> tuSubjectInt = new ArrayList<Integer>();
 				for(int i=0; i<tusubject.length;i++) {
 					tuSubjectInt.add(Integer.parseInt(tusubject[i]));
@@ -280,9 +281,11 @@ public class TutorDaos {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		TutorDaos td = new TutorDaos();
+		UserDaos ud = new UserDaos();
 		for (Tutor t : td.findAllTutor()) {
 			System.out.println(t);
 			System.out.println(t.getTuSubjects());
+			System.out.println(ud.getUsernameByUId(t.getUId())+t.getUId());
 		}
 	//System.out.println(td.insert(t));
 	}
