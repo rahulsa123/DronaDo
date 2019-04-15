@@ -18,15 +18,20 @@ $(document).ready(function(){
 	} );
 	
 });
+
 </script>
 </head>
 <body>
+<marquee class="container  bg-dark text-info  font-italic" width="100%" direction="right"  behavior="alternate">
+<h1  style="text-shadow: 3px 3px 5px red;">Search Tutor</h1>
+</marquee>
+<br><br>
 <input type="hidden" name ="throughJspPAge" id ="throughJspPAge" value="true">
 <div class ="table-responsive">
-<table id ="tutorTable" class="table">
-	<thead>
-		<tr>
-			<th>Name</th>
+<table id ="tutorTable" class="table table-hover">
+	<thead class="bg-dark">
+		<tr class="text-info">
+			<th >Name</th>
 			<th>Email</th>
 			<th>Qualification</th>
 			<th>Address</th>

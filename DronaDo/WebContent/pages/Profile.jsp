@@ -30,16 +30,16 @@
   	<strong>Success!</strong> Profile is updated!!!
 	</div>
  <%} %>
- <div class ="table-responsive ">
- <table class="table table-hover ">
- <tr>
+ <div class ="container table-responsive" >
+ <table class="table table-hover" style="width:100%">
+ <tr class="bg-dark ">
  	<th colspan="2">
- 	<h1>Hello <%= (String)request.getAttribute("userType") %> </h1>
+ 	<h1 class="text-info">Hello <%= (String)request.getAttribute("userType") %> </h1>
  	</th>
  </tr>
  <tr>
- 	<td>Full Name : </td>
- 	<td> <%=(String)request.getAttribute("fullName") %></td>
+ 	<td width="50%">Full Name : </td>
+ 	<td width="50%"> <%=(String)request.getAttribute("fullName") %></td>
  </tr>
  <tr>
  	<td>Email : </td>
@@ -72,15 +72,15 @@
  </tr>
  </table >
  </div>
- <br>
+ <br><br>
  
  <input type="button" class="btn btn-primary" id="edit" name="edit" value="Edit" >
  <form id="editing_form"  name ="editing_form"  action="/DronaDo/Profile" method="post" style="display:none">
  <input type="hidden" id="operation" name="operation" value="None" >
- <table class="table">
- <tr>
- <th colspan="2">
- <h1>Edit Profile</h1>
+ <table class="table table-hover" style="width:100%">
+ <tr class="bg-dark">
+ <th colspan="2" >
+ <h1 class="text-info">Edit Profile</h1>
  </th>
  </tr>
  <tr>
@@ -140,14 +140,7 @@ New Address:
  <% } %>
  
  
- <tr>
- <td> New Profile Picture </td>
- <td> 
-  <input type="file" id="profile_pic" name="profile_pic" class="input-default-js btn " data-multiple-target="{target} files selected"
-    multiple>
-   
- </td>
- </tr>
+
  
  
  <tr>
