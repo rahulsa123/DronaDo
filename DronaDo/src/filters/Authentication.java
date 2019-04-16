@@ -57,7 +57,7 @@ public class Authentication implements Filter {
 		HttpSession session = req.getSession();
 		String uri = req.getRequestURI();
 		String url=req.getHeader("Referer");
-		//System.out.println("pre url is"+uri);
+		System.out.println("url "+url+"\n uri"+uri);
 		this.context.log("Requested Resource::" + uri);
 		if(uri.endsWith("signin.jsp")||uri.endsWith("completeRegistration.jsp")||uri.endsWith("signup.jsp")||uri.endsWith("index.jsp")||uri.endsWith("LoginServlet")||uri.endsWith("SignupServlet")||uri.endsWith("js")
 				|| uri.endsWith("css")  || uri.endsWith("jpg")|| uri.endsWith("png")|| uri.endsWith("SignUpServlet.jsp")|| uri.endsWith("html")) {

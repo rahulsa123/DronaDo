@@ -23,7 +23,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<marquee class="container  bg-dark text-info  font-italic" width="100%" direction="right"  behavior="alternate">
+<marquee class="container   text-info  font-italic" width="100%" direction="right"  behavior="alternate">
 <h1  style="text-shadow: 3px 3px 5px red;">Search Tutor</h1>
 </marquee>
 <br><br>
