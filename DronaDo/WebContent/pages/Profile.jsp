@@ -32,9 +32,9 @@
  <%} %>
  <div class ="container table-responsive" >
  <table class="table table-hover" style="width:100%">
- <tr class="bg-dark ">
+ <tr class="">
  	<th colspan="2">
- 	<h1 class="text-info">Hello <%= (String)request.getAttribute("userType") %> </h1>
+ 	<h1 class="text-info" style="text-shadow: 2px 2px 2px red;">Hello <%= (String)request.getAttribute("fullName") %> </h1>
  	</th>
  </tr>
  <tr>

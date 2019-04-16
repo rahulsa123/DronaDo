@@ -139,7 +139,7 @@ public class NotificationDaos {
 		ArrayList<Notification> aList = new ArrayList<Notification>();
 		
 		try {
-			String sql = " select * from notification where receiver =? or sender=?";
+			String sql = " select * from notification where receiver =? or sender=? order by date desc";
 			PreparedStatement pd = c.prepareStatement(sql);
 			pd.setInt(1, uId);
 			pd.setInt(2, uId);

@@ -32,21 +32,22 @@ $(document).ready(function(){
 </marquee>
 <br><br>
 <input type="hidden" name ="throughJspPAge" id ="throughJspPAge" value="true">
-<div class ="table-responsive">
-<table id ="tutorTable" class="table tb-dark">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Username</th>
-			<th>Email</th>
-			<th>Qualification</th>
-			<th>Address</th>
-			<th>Subject</th>
-			<th>Standard</th>
-			<th>Stream</th>
+<div class ="table-responsive" style="max-width:80%;min-width:100%;">
+<table id ="tutorTable" class="table table-hover" >
+	<thead class="bg-info">
+		<tr style="text-shadow: 2px 2px 2px blue;">
+			<th><h5>Name</h5></th>
+			<th><h5>Username</h5></th>
+			<th><h5>Email</h5></th>
+			<th><h5>Qualification</h5></th>
+			<th><h5>Address</h5></th>
+			<th><h5>Subject</h5></th>
+			<th><h5>Standard</h5></th>
+			<th><h5>Stream</h5></th>
+			<th><h5>Request</h5></th>
 		</tr>
 	</thead>
-<tbody>
+<tbody >
 
 <%
 TutorDaos td = new TutorDaos();
@@ -61,7 +62,7 @@ for(Tutor t : allTutor){
 		
 %>
 
-	<tr>
+	<tr class="table-success">
 	<td><%=t.getTuFullName()%></td>
 	<td><%=username%></td>
 	<td><%=t.getTuEmail()%></td>
@@ -70,6 +71,7 @@ for(Tutor t : allTutor){
 	<td><%=s.getSName()%></td>
 	<td><%=s.getSStandard()%></td>
 	<td><%=s.getSStream()%></td>
+	<td><a href="#" class="btn btn-primary">REQUEST</a></td>
 	</tr>
 
 <%}} %>

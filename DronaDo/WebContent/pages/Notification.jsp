@@ -14,7 +14,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>DronaDo - Notifications</title>
-
+<!--  
 <link href="/DronaDo/css/bootstrap.css" rel="stylesheet">
 <link href="/DronaDo/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="/DronaDo/css/prettyPhoto.css" rel="stylesheet">
@@ -24,28 +24,62 @@
 <link rel="stylesheet" media="screen" href="/DronaDo/css/sequencejs.css">
 <link href="/DronaDo/css/style.css" rel="stylesheet">
 <link href="/DronaDo/color/default.css" rel="stylesheet">
+-->
+
+
 </head>
 <body>
 	<div class="span12" style="padding: 30px 30px 30px 30px">
-		<h3>Notifications</h3>
-		<div class="accordion" id="accordion2">
-			${requestScope.notifications}
-		</div>
+		
+<h1 style="text-shadow: 3px 3px 5px red; float:left;">Notifications</h1>
+<a class="btn btn-primary" style="float:right;" onclick="newMessage()">New Message</a>
+		
 	</div>
-	<div class="span12">
+	<div class="span12 table-responsive" id="messageBlock" style="display:none; width: 100%">
+	
 		<form method="post" action="/DronaDo/Notifications"
 			onsubmit="return validate()">
-			<input type="hidden" id="isFormSubmitted" name="isFormSubmitted"
-				value="false"> <input type="text" name="all" id="all"
-				placeholder="No Receivers added" style="width: 1080px;"><br>
-			<label for="users"><i
-				class="zmdi zmdi-account material-icons-name"></i></label> <input id="users"
-				style="width: 870px;" /> <input type="button"
-				onclick="addReceivers()" value="Add"> <input type="text"
-				name="message" id="message" placeholder="Write a message"><input
-				type="submit" value="Send">
+		<table class="table bg-white" style="min-width:100%;max-width:100%">
+		<tr>  <td colspan="2">
+						<input type="hidden" id="isFormSubmitted" name="isFormSubmitted"
+					value="false"> 
+					<input type="hidden" name ="all" id="all">
+					<input type="text" class="form-control"  id="all1"
+					placeholder="No Receivers added" style="height:50px;" disabled="disabled">
+					
+					<label for="users"><i
+					class="zmdi zmdi-account material-icons-name"></i></label>				
+					     
+				</td>     
+		</tr>
+		<tr>
+			<td>
+				<input class="form-control" id="users"  />	
+			</td>
+			<td>
+				<input type="button" class="btn btn-primary"
+				onclick="addReceivers()" value="Add">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<textarea  class="form-control" name="message" id="message" placeholder="Write a message"></textarea>
+			</td>
+			<td>
+				<input
+				type="submit" class="btn btn-primary" value="Send">
+			</td>
+		</tr>
+			  
+			
+			
+		</table>
 		</form>
+	
 	</div>
+	<div class="accordion" id="accordion2">
+			${requestScope.notifications}
+		</div>
 	<script src="/DronaDo/js/jquery.min.js"></script>
 	<script src="/DronaDo/js/jquery.easing.js"></script>
 	<script src="/DronaDo/js/bootstrap.js"></script>
@@ -68,20 +102,20 @@
 		src="/DronaDo/js/jquery-ui-1.8.5.custom.min.js"></script>
 	<script>
 		function validate() {
+			alert("mess"+document.getElementById("all").value+" "+document.getElementById("message").innerHTML);
 			document.getElementById("isFormSubmitted").value = "true";
 			return true;
 		}
 		$(document).ready(function() {
 			alert("running");
 			$("input#users").autocomplete({
-				source : [
-	<%=s%>
-		]
+				source : [<%=s%>]
 			});
 		});
 		function addReceivers() {
 			var s = document.getElementById("all").value;
 			var v = document.getElementById("users").value;
+			document.getElementById("users").value="";
 			if (s == "")
 				s = v;
 			else {
@@ -89,6 +123,13 @@
 					s = s + "," + v;
 			}
 			document.getElementById("all").value = s;
+			document.getElementById("all1").value = s;
+		}
+		function newMessage(){
+			if(document.getElementById("messageBlock").style.display =='none')
+				document.getElementById("messageBlock").style.display = "block";
+			else
+				document.getElementById("messageBlock").style.display = "none";
 		}
 	</script>
 </body>

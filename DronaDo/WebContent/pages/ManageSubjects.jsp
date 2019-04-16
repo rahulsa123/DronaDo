@@ -9,19 +9,68 @@
 	int a = (int)session.getAttribute("uid");
 	ArrayList<Integer> arrSub = td.getTuSubjects(a);
 %>
+<style>
+#"mainDiv" ul {
+background-color: black;
+
+}
+
+
+
+
+</style>
 <script type="text/javascript">
 document.getElementById("title").innerHTML ="Manage Subjects";
 </script>
-<div class="container text-center">
-	Manage Subjects
+<div id ="mainDiv" class="container text-center">
+	<h1 style="text-shadow: 2px 2px 3px blue;"> Manage Subjects</h1>
 	
 	<form method="post" action="/DronaDo/ManageSubjects">
 		<div id="all"></div>
-							<label for="subjects"><i
-								class="zmdi zmdi-account material-icons-name"></i>Subject Name</label> <input
-								id="subjects" /> <label for="standardFrom"><i
-								class="zmdi zmdi-account material-icons-name"></i>Standard From</label>
-							<select id="standardFrom" name="standardFrom">
+							<br><br>
+					<table>
+					<tr>
+						<td>
+							<label for="subjects" ><i
+								class="zmdi zmdi-account material-icons-name" ></i><h4  style="padding-right: 15px; font-style: italic;">Subject Name : </h4></label>
+						</td>
+						<td>
+							 <input	type="text"		id="subjects" class="dropdown-toggle form-control" />
+						</td>
+					</tr> 
+					<tr>
+					<td>
+						<label for="standardFrom" ><i class="zmdi zmdi-account material-icons-name"></i> <h4  style="padding-right: 15px;font-style: italic;">Standard From :</h4></label>
+					</td>
+					<td>
+							<select id="standardFrom" name="standardFrom" class="form-control" >
+								<option  class="dropdown-item" value="Pre-Nursery">Pre-Nursery</option>
+								<option  class="dropdown-item" value="Nursery">Nursery</option>
+								<option  class="dropdown-item" value="I">I</option>
+								<option  class="dropdown-item" value="II">II</option>
+								<option  class="dropdown-item"value="III">III</option>
+								<option  class="dropdown-item" value="IV">IV</option>
+								<option  class="dropdown-item" value="V">V</option>
+								<option  class="dropdown-item" value="VI">VI</option>
+								<option  class="dropdown-item" value="VII">VII</option>
+								<option  class="dropdown-item" value="VIII">VIII</option>
+								<option  class="dropdown-item" value="IX">IX</option>
+								<option  class="dropdown-item" value="X">X</option>
+								<option  class="dropdown-item" value="XI">XI</option>
+								<option  class="dropdown-item" value="XII">XII</option>
+								<option  class="dropdown-item" value="After School">After School</option>
+								<option  class="dropdown-item" value="Graduation">Graduation</option>
+								<option  class="dropdown-item" value="Post Graduation">Post Graduation</option>
+							</select>
+					</td>
+					</tr>
+					<tr>
+					<td>
+						 <label for="standardTo"><i
+								class="zmdi zmdi-account material-icons-name"></i><h4  style="padding-right: 15px;font-style: italic;">Standard Upto : </h4></label>
+					</td>
+					<td>
+							<select id="standardTo" name="standardTo" class="form-control">
 								<option value="Pre-Nursery">Pre-Nursery</option>
 								<option value="Nursery">Nursery</option>
 								<option value="I">I</option>
@@ -39,30 +88,18 @@ document.getElementById("title").innerHTML ="Manage Subjects";
 								<option value="After School">After School</option>
 								<option value="Graduation">Graduation</option>
 								<option value="Post Graduation">Post Graduation</option>
-							</select> <label for="standardTo"><i
-								class="zmdi zmdi-account material-icons-name"></i>Standard Upto</label>
-							<select id="standardTo" name="standardTo">
-								<option value="Pre-Nursery">Pre-Nursery</option>
-								<option value="Nursery">Nursery</option>
-								<option value="I">I</option>
-								<option value="II">II</option>
-								<option value="III">III</option>
-								<option value="IV">IV</option>
-								<option value="V">V</option>
-								<option value="VI">VI</option>
-								<option value="VII">VII</option>
-								<option value="VIII">VIII</option>
-								<option value="IX">IX</option>
-								<option value="X">X</option>
-								<option value="XI">XI</option>
-								<option value="XII">XII</option>
-								<option value="After School">After School</option>
-								<option value="Graduation">Graduation</option>
-								<option value="Post Graduation">Post Graduation</option>
-							</select> <label for="stream"><i
-								class="zmdi zmdi-account material-icons-name"></i>Stream</label> <input
-								id="addStream"> <input class="btn btn-color" type="button"
-								onclick="addSubject()" value="Add">
+							</select>
+					</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;">
+					 <label for="stream"><i class="zmdi zmdi-account material-icons-name pt-0"></i><h4 >Stream : </h4></label>
+					</td>
+					<td>		
+					 <input class="form-control  dropdown-toggle"  id="addStream"> <input class="btn btn-color" type="button" onclick="addSubject()" value="Add">
+					</td>
+					</tr>
+				</table>
 	</form>
 	<hr>
 	<h3>My Subjects</h3>
@@ -79,7 +116,7 @@ document.getElementById("title").innerHTML ="Manage Subjects";
 		<th>Delete/Cancel</th>					
 		</tr>
 		
-		<%for (int i=0;i<arrSub.size();i++){ 
+		<% for (int i=0;i<arrSub.size();i++){ 
 			int idx = arrSub.get(i);
 			Subject sub = sd.getSubjectById(idx);
 		%>

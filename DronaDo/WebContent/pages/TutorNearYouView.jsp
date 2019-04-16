@@ -48,7 +48,7 @@ function loadMapWithMarker(){
 </head>
 <body>
 <div class ="container">
-<marquee class="container text-info bg-dark font-italic" width="100%" direction="right" scrolldelay="-10" behavior="alternate">
+<marquee class="container text-info  font-italic" width="100%" direction="right" scrolldelay="-10" behavior="alternate">
 <h1 style="text-shadow: 3px 3px 5px red;">Tutor Near You</h1>
 </marquee>
 <div class="container" id="map" style="width:100%;" ></div>

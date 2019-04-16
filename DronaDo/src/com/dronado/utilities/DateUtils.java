@@ -18,6 +18,11 @@ public class DateUtils {
 		in.close();
 		return dt;
 	}
+	
+	public static String DateToString(java.util.Date date) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(date);
+	}
 	public static java.util.Date convertDate(String date) {
 		java.util.Date dt = null;
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
