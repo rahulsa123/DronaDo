@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <%@page import="com.dronado.daos.UserDaos"%>
 <%@page import="com.dronado.pojos.Subject"%>
 <%@page import="com.dronado.daos.SubjectDaos"%>

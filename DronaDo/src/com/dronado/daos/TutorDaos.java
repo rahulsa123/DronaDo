@@ -325,16 +325,8 @@ public class TutorDaos {
 			System.out.println(rs.getFetchSize());
 			while(rs.next()) {
 				Tutor t = new Tutor(rs.getInt("tuId"), rs.getInt("uid"), rs.getString("tuFullName"), rs.getString("tuEmail"), rs.getString("tuPhoneNo"), rs.getString("tuAddress"), rs.getString("qualification"), rs.getInt("tuAddressId"));
-<<<<<<< HEAD
+
 				t.setUId(rs.getInt("uid"));
-				String[] tusubject = rs.getString("tusubjects").split(",");
-				//System.out.println("tusubject"+rs.getString("tusubjects"));
-				ArrayList<Integer> tuSubjectInt = new ArrayList<Integer>();
-				for(int i=0; i<tusubject.length;i++) {
-					tuSubjectInt.add(Integer.parseInt(tusubject[i]));
-				}
-				t.setTuSubjects(tuSubjectInt);
-=======
 				if(rs.getString("tusubjects")!=null) 
 				{
 				String [] tusubject = rs.getString("tusubjects").split(",");
@@ -350,7 +342,7 @@ public class TutorDaos {
 					t.setTuSubjects(a);
 				}
 				
->>>>>>> refs/remotes/origin/origin
+
 				t.setUsername(ud.getUsernameByUId(t.getUId()));
 			
 				t.setUserType("tutor");
@@ -358,11 +350,11 @@ public class TutorDaos {
 			}
 		}catch (Exception e) {
 			// TODO: handle exception
-<<<<<<< HEAD
+
 			System.out.println("Error in TutorDaos.findAllTutor" +e);
-=======
+
 			System.out.println("Error in TutorDaos.findAllTutor " +e);
->>>>>>> refs/remotes/origin/origin
+
 		}finally {
 			cp.putConnection(c);
 		}
@@ -370,20 +362,20 @@ public class TutorDaos {
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		TutorDaos td = new TutorDaos();
-<<<<<<< HEAD
-		UserDaos ud = new UserDaos();
-=======
->>>>>>> refs/remotes/origin/origin
-		for (Tutor t : td.findAllTutor()) {
-			System.out.println(t);
-			System.out.println(t.getTuSubjects());
-<<<<<<< HEAD
-			System.out.println(ud.getUsernameByUId(t.getUId())+t.getUId());
-=======
->>>>>>> refs/remotes/origin/origin
+//		TutorDaos td = new TutorDaos();
+//<<<<<<< HEAD
+//		UserDaos ud = new UserDaos();
+//=======
+//>>>>>>> refs/remotes/origin/origin
+//		for (Tutor t : td.findAllTutor()) {
+//			System.out.println(t);
+//			System.out.println(t.getTuSubjects());
+//<<<<<<< HEAD
+//			System.out.println(ud.getUsernameByUId(t.getUId())+t.getUId());
+//=======
+//>>>>>>> refs/remotes/origin/origin
 		}
 	//System.out.println(td.insert(t));
-	}
+	//}
 
 }
