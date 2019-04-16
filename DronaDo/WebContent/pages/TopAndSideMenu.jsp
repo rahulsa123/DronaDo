@@ -49,7 +49,7 @@
 			<li><a href="/DronaDo/ManageSubjects"> <i class="fa fa-book"></i>
 					Manage Subjects
 			</a></li>
-			<li><a href="#"> <i class="fa fa-bookmark"></i> Manage Class
+			<li><a href="/DronaDo/ManageClass"> <i class="fa fa-bookmark"></i> Manage Class
 			</a></li>
 			<li><a href="/DronaDo/Notifications"> <i class="fa fa-comments"></i> Notifications
 			</a></li>
@@ -77,7 +77,7 @@
 			</a></li>
 			<li><a href="/DronaDo/Notifications"> <i class="fas fa-bell"></i> Notifications
 			</a></li>
-			<li><a href="#"> <i class="fa fa-pie-chart"></i> Class
+			<li><a href="/DronaDo/ManageClass"> <i class="fa fa-pie-chart"></i> Class
 					Status
 			</a></li>
 			

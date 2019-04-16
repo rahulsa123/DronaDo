@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 <%@page import="com.dronado.daos.UserDaos"%>
 <%@page import="com.dronado.pojos.Subject"%>
 <%@page import="com.dronado.daos.SubjectDaos"%>
 <%@page import="com.dronado.pojos.Tutor"%>
 <%@page import="java.util.ArrayList"%>
+
+
+<%@page import="com.dronado.pojos.Tutor"%>
+<%@page import="com.dronado.daos.SubjectDaos"%>
+
 <%@page import="com.dronado.daos.TutorDaos"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" %>
@@ -14,12 +20,10 @@
 
 <script>
 $(document).ready(function(){
+
 	$(document).ready( function () {
 	    $('#tutorTable').DataTable();
-	} );
-	
-});
-
+	} );});
 </script>
 </head>
 <body>
@@ -29,10 +33,10 @@ $(document).ready(function(){
 <br><br>
 <input type="hidden" name ="throughJspPAge" id ="throughJspPAge" value="true">
 <div class ="table-responsive">
-<table id ="tutorTable" class="table table-hover">
-	<thead class="bg-dark">
-		<tr class="text-info">
-			<th >Name</th>
+<table id ="tutorTable" class="table tb-dark">
+	<thead>
+		<tr>
+			<th>Name</th>
 			<th>Username</th>
 			<th>Email</th>
 			<th>Qualification</th>
@@ -43,6 +47,7 @@ $(document).ready(function(){
 		</tr>
 	</thead>
 <tbody>
+
 <%
 TutorDaos td = new TutorDaos();
 ArrayList<Tutor> allTutor = td.findAllTutor();
@@ -68,6 +73,9 @@ for(Tutor t : allTutor){
 	</tr>
 
 <%}} %>
+
+
+
 </tbody>
 </table>
 </div>

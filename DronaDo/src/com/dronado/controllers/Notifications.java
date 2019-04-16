@@ -50,15 +50,18 @@ public class Notifications extends HttpServlet {
 		HttpSession session = request.getSession();
 		int uid = -1;
 		try {
-		uid = Integer.parseInt((String)session.getAttribute("uid"));
+		uid = (int)session.getAttribute("uid");
 		NotificationDaos nd = new NotificationDaos();
 		UserDaos ud = new UserDaos();
-		if(request.getParameter("isFormSubmitted").equalsIgnoreCase("true")) {
+		if(request.getParameter("isFormSubmitted")!=null && request.getParameter("isFormSubmitted").equalsIgnoreCase("true")) {
 			String message= request.getParameter("message");
+			System.out.println(request.getParameter("all"));
+			if(request.getParameter("all")!=null){
 			for(String username: request.getParameter("all").split(",")) {
 				int recId = ud.getUidByUsername(username);
 				if(recId!=-1)
 					nd.insert(new Notification(0,new java.util.Date(),recId,uid,message,"normal"));
+			}
 			}
 		}
 		ArrayList<Notification> all = nd.findBySenderOrReceiverUId(uid);
@@ -119,6 +122,7 @@ public class Notifications extends HttpServlet {
 							"                </div>";
 				}
 			}
+			z+=1;
 		}
 		request.setAttribute("notifications", toPrint);
 		request.setAttribute("title", "Dashboard - Notification");
@@ -127,7 +131,8 @@ public class Notifications extends HttpServlet {
 		rs.forward(request, response);
 		}
 		catch(Exception e) {
-			System.out.println(e);
+			//System.out.println(e);
+			e.printStackTrace();
 			response.sendRedirect("/DronaDo/pages/index.jsp");
 		}
 		

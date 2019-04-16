@@ -47,26 +47,40 @@ public class ManageSubjects extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int uid1=1;
 		HttpSession session = request.getSession();
-		UserDaos ud = new UserDaos();
-		session.setAttribute("uid", uid1);
-		session.setAttribute("userType", ud.getUserTypeByUId(uid1));
 		
-		
-		
-		if(request.getParameter("manageSubjectsOperation")!=null && request.getParameter("manageSubjectsOperation").equals("add")) {
-			String subjectName = request.getParameter("subjectName");
-			String subjectStandard = request.getParameter("subjectStandard");
-			String subjectStream = request.getParameter("subjectStream");
-			SubjectDaos sd = new SubjectDaos();
-			int sid = sd.checkExistance(subjectName, subjectStream, subjectStandard);
-			if(sid!=-1)
-				sid = sd.insert(new Subject(0,subjectName,subjectStandard,subjectStream));
-			TutorDaos td = new TutorDaos();
-			td.addSubjectByUid(sid,(int)session.getAttribute("uid"));
+		if(session.getAttribute("uid") == null) {
+			request.setAttribute("infoMessage", "<a%20class=\\\"alert%20alert-info\\\">You%20need%20to%20login</a>");
+			request.setAttribute("showSignIn", "true");
+			request.setAttribute("showSignUp", "false");
+			RequestDispatcher rd = request.getRequestDispatcher("pages/index.jsp");
+			rd.forward(request, response);
+			return;
 		}
-		SubjectDaos sd = new SubjectDaos();
+		int uid = (Integer)session.getAttribute("uid");
+		if(request.getParameter("operation")!=null) {
+			String sno = request.getParameter("sno");
+			String sname = request.getParameter("sname");
+			String standardFrom = request.getParameter("stdFrom");
+			String standardTo = request.getParameter("stdTo");
+			String stream = request.getParameter("stream");
+			SubjectDaos sd = new SubjectDaos();
+			TutorDaos td = new TutorDaos();
+			if( request.getParameter("operation").equalsIgnoreCase("Add")) {
+
+				int sid = sd.insert(new Subject(0,sname,standardFrom +"-"+standardTo,stream));
+				
+				td.addSubjectByUid(sid,(int)session.getAttribute("uid"));
+			}
+			else if(request.getParameter("operation").equalsIgnoreCase("Delete")) {
+				System.out.println(sno + "--" +uid);
+				td.removeSubjectByUId(Integer.parseInt(sno), uid);
+				sd.removeById(Integer.parseInt(sno));
+			} else if(request.getParameter("operation").equalsIgnoreCase("Update")) {
+				sd.edit(new Subject(Integer.parseInt(sno), sname, standardFrom +"-" + standardTo, stream));
+			}
+		}
+		
 		request.setAttribute("title", "Dashboard - Manage Subjects");
 		request.setAttribute("mainPartFile", "ManageSubjects.jsp");
 		RequestDispatcher rs = request.getRequestDispatcher("/pages/Dashboard.jsp");

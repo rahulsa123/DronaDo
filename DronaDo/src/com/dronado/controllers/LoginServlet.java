@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 		if(uid==-1) {
 			request.setAttribute("infoMessage", "<a%20class=\\\"alert%20alert-danger\\\">Invalid%20Username%20or%20Password</a>");
 			request.setAttribute("showSignIn", "true");
-			request.setAttribute("showSignIn", "false");
+			request.setAttribute("showSignUp", "false");
 			RequestDispatcher rd = request.getRequestDispatcher("pages/index.jsp");
 			rd.forward(request, response);
 			return;
