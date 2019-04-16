@@ -145,6 +145,51 @@ public class SubjectDaos {
 		}
 		return subList;
 	}
+	
+	public String getAllInSubjectsFromUid(int uid) {
+		ConnectionPool pool = ConnectionPool.getInstance();
+		Connection conn = pool.getConnection();
+		String subList = "";
+		try {
+			for(int i:new TutorDaos().getTuSubjects(uid)) {
+				String sql = "SELECT sname,sstandard,stream FROM subject WHERE sid = ?";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, i);
+				ResultSet rs =ps.executeQuery(sql);
+				if(rs.next()) {
+					subList += ",\""+rs.getString("sname")+" & "+rs.getString("sstandard")+" & "+rs.getString("sstream")+"\"";
+				}
+			}
+			subList = subList.substring(1);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			pool.putConnection(conn);
+		}
+		return subList;
+	}
+	public String getAllInSubjectsFromTuid(int tuid) {
+		ConnectionPool pool = ConnectionPool.getInstance();
+		Connection conn = pool.getConnection();
+		String subList = "";
+		try {
+			for(int i:new TutorDaos().getTuSubjectsByTuid(tuid)) {
+				String sql = "SELECT sname,sstandard,sstream FROM subject WHERE sid = ?";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, i);
+				ResultSet rs =ps.executeQuery();
+				if(rs.next()) {
+					subList += ",\""+rs.getString("sname")+" & "+rs.getString("sstandard")+" & "+rs.getString("sstream")+"\"";
+				}
+			}
+			subList = subList.substring(1);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			pool.putConnection(conn);
+		}
+		return subList;
+	}
 	public String getStreams() {
 		ConnectionPool pool = ConnectionPool.getInstance();
 		Connection conn = pool.getConnection();
@@ -167,13 +212,14 @@ public class SubjectDaos {
 	public Subject getSubjectById(int sid) {
 		ConnectionPool pool = ConnectionPool.getInstance();
 		Connection conn = pool.getConnection();
-		Subject sub = new Subject();
+		Subject sub = null;
 		try {
 			String sql = "SELECT * FROM subject WHERE sid=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1,sid);
 			ResultSet rs =ps.executeQuery();
 			if(rs.next()) {
+				sub = new Subject();
 				sub.setSId(rs.getInt("sid"));
 				sub.setSName(rs.getString("sname"));
 				sub.setSStandard(rs.getString("sstandard"));
@@ -221,11 +267,8 @@ public class SubjectDaos {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SubjectDaos sd = new SubjectDaos();
-		Subject s = new Subject(0, "Science", "6th", "main");
-//		sd.removeById(1);
-		s.setSId(2);
-		sd.edit(s);
-		System.out.println();
+		Subject s = sd.getSubjectById(0);
+		System.out.println(s);
 	}
 
 }

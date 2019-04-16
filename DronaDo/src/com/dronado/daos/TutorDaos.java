@@ -162,7 +162,27 @@ public class TutorDaos {
 		}
 		return t;
 	}
-	
+	public ArrayList<Integer> getTuSubjectsByTuid(int tuid){
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		ArrayList<Integer> tuSubjects = new ArrayList<Integer>();
+		try {
+			String sql = "SELECT tusubjects FROM tutor WHERE tuid = ?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setInt(1, tuid);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				for (String s: rs.getString("tusubjects").split(","))
+					tuSubjects.add(Integer.parseInt(s));
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			cp.putConnection(c);
+		}
+		return tuSubjects;
+	}
 	public ArrayList<Integer> getTuSubjects(int uid){
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
@@ -245,6 +265,54 @@ public class TutorDaos {
 			cp.putConnection(c);
 		}
 	}
+	public void removeSubjectByTuId(int sid, int tuid) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		try {
+			String tuSubjects = getTuSubjectsInString(tuid);
+			String sql = "UPDATE tutor SET tusubjects=? WHERE tuid=?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			String changed = "";
+			for (String str: tuSubjects.split(",")) {
+				if(Integer.parseInt(str)!=sid)
+					changed+= "," + str;
+			}
+			if(!changed.equals(""))
+				changed = changed.substring(1);
+			ps.setString(1, changed);
+			ps.setInt(2, tuid);
+			ps.executeUpdate();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			cp.putConnection(c);
+		}
+	}
+	public void removeSubjectByUId(int sid, int uid) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		try {
+			String tuSubjects = getTuSubjectsInString(uid);
+			String sql = "UPDATE tutor SET tusubjects=? WHERE uid=?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			String changed = "";
+			for (String str: tuSubjects.split(",")) {
+				if(Integer.parseInt(str)!=sid)
+					changed+= "," + str;
+			}
+			if(!changed.equals(""))
+				changed = changed.substring(1);
+			ps.setString(1, changed);
+			ps.setInt(2, uid);
+			ps.executeUpdate();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			cp.putConnection(c);
+		}
+	}
 	public ArrayList<Tutor> findAllTutor(){
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
@@ -256,6 +324,20 @@ public class TutorDaos {
 			ResultSet rs = pd.executeQuery();
 			while(rs.next()) {
 				Tutor t = new Tutor(rs.getInt("tuId"), rs.getInt("uid"), rs.getString("tuFullName"), rs.getString("tuEmail"), rs.getString("tuPhoneNo"), rs.getString("tuAddress"), rs.getString("qualification"), rs.getInt("tuAddressId"));
+				if(rs.getString("tusubjects")!=null) 
+				{
+				String [] tusubject = rs.getString("tusubjects").split(",");
+				
+				ArrayList<Integer> tusubjectInt = new ArrayList<Integer>();
+				for(String s:tusubject) {
+					tusubjectInt.add(Integer.parseInt(s));
+				}
+				t.setTuSubjects(tusubjectInt);
+				}else {
+					ArrayList<Integer> a = new ArrayList<Integer>();
+					a.add(0);
+					t.setTuSubjects(a);
+				}
 				
 				t.setUsername(ud.getUsernameByUId(t.getUId()));
 			
@@ -264,7 +346,7 @@ public class TutorDaos {
 			}
 		}catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error in TutorDaos.findByAddressId" +e);
+			System.out.println("Error in TutorDaos.findAllTutor " +e);
 		}finally {
 			cp.putConnection(c);
 		}
@@ -273,8 +355,9 @@ public class TutorDaos {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		TutorDaos td = new TutorDaos();
-		for (Tutor t : td.findByAddressId(1)) {
+		for (Tutor t : td.findAllTutor()) {
 			System.out.println(t);
+			System.out.println(t.getTuSubjects());
 		}
 	//System.out.println(td.insert(t));
 	}

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.dronado.pojos.Assigned;
 import com.dronado.pojos.Student;
+import com.dronado.pojos.Teaches;
 import com.dronado.pojos.Tutor;
 import com.dronado.utilities.ConnectionPool;
 import com.dronado.utilities.DateUtils;
@@ -37,44 +38,44 @@ public class AssignedDaos {
 		return aid;
 	}
 
-	public ArrayList<Student> findAllStudentByTutorId(int tuId) {
+	
+	
+	public ArrayList<Student> findAllStudentByTid(int tid){
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
-		ArrayList<Student> array = new ArrayList<Student>();
-		StudentDaos sd = new StudentDaos();
+		ArrayList<Student> arr = new ArrayList<Student>();
 		try {
-			String sql = "select studid from assigned where tuid =?";
-			PreparedStatement pd = c.prepareStatement(sql);
-			pd.setInt(1, tuId);
-			ResultSet rs = pd.executeQuery();
-			while (rs.next()) {
-				array.add(sd.findByStudId(rs.getInt("studid")));
+			String sql = "SELECT studid from assigned WHERE tid=?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setInt(1, tid);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				arr.add(new StudentDaos().findByStudId(rs.getInt("studid")));
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("Error in StudentDaos.findAllStudentByTuId" + e);
-		} finally {
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
 			cp.putConnection(c);
 		}
-		return array;
+		return arr;
 	}
-
-	public ArrayList<Tutor> findAllTutorByStudentId(int studId) {
+	
+	public ArrayList<Teaches> findAllClassByStudentId(int studId) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
-		ArrayList<Tutor> array = new ArrayList<Tutor>();
-		TutorDaos sd = new TutorDaos();
+		ArrayList<Teaches> array = new ArrayList<Teaches>();
+		TeachesDaos sd = new TeachesDaos();
 		try {
-			String sql = "select tuid from assigned where studid =?";
+			String sql = "select tid from assigned where studid =?";
 			PreparedStatement pd = c.prepareStatement(sql);
 			pd.setInt(1, studId);
 			ResultSet rs = pd.executeQuery();
 			while (rs.next()) {
-				array.add(sd.findByTuId(rs.getInt("tuid")));
+				array.add(sd.findByTId(rs.getInt("tid")));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error in StudentDaos.findAllStudentByTuId" + e);
+			System.out.println("Error in StudentDaos.findAllClassByStudentId" + e);
 		} finally {
 			cp.putConnection(c);
 		}
@@ -129,23 +130,23 @@ public class AssignedDaos {
 		return array;
 	}
 
-	public ArrayList<Tutor> findTutorByDateRange(java.util.Date startDate, java.util.Date endDate) {
+	public ArrayList<Teaches> findTeachesByDateRange(java.util.Date startDate, java.util.Date endDate) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
-		ArrayList<Tutor> array = new ArrayList<Tutor>();
-		TutorDaos sd = new TutorDaos();
+		ArrayList<Teaches> array = new ArrayList<Teaches>();
+		TeachesDaos sd = new TeachesDaos();
 		try {
-			String sql = "select tuid from assigned where dateofjoining BETWEEN ? and ?";
+			String sql = "select tid from assigned where dateofjoining BETWEEN ? and ?";
 			PreparedStatement pd = c.prepareStatement(sql);
 			pd.setDate(1, DateUtils.convertUtilToSql(startDate));
 			pd.setDate(2, DateUtils.convertUtilToSql(endDate));
 			ResultSet rs = pd.executeQuery();
 			while (rs.next()) {
-				array.add(sd.findByTuId(rs.getInt("tuid")));
+				array.add(sd.findByTId(rs.getInt("tid")));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Error in StudentDaos.findAllStudentByTuId" + e);
+			System.out.println("Error in StudentDaos.findTeachesByDateRange" + e);
 		} finally {
 			cp.putConnection(c);
 		}
@@ -153,6 +154,31 @@ public class AssignedDaos {
 
 	}
 
+	public Assigned getAssigned(int tid,int studid) {
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		Assigned a = new Assigned();
+		try {
+			String sql = "SELECT aid FROM assigned WHERE tid =? and studid=?";
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setInt(1, tid);
+			ps.setInt(2, studid);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				a.setaId(rs.getInt("aid"));
+				a.setDateOfJoining(DateUtils.convertSqlToUtil(rs.getDate("dateofjoining")));
+				a.setStudId(rs.getInt("studid"));
+				a.settId(rs.getInt("tid"));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			cp.putConnection(c);
+		}
+		return a;
+	}
+
+	
 	public Assigned getAssignedById(int aid) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
