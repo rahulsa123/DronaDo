@@ -124,7 +124,7 @@
 				</div>
 			</div>
 		</nav>
-<div class="MainPart">
+<div class="MainPart" id="mainPartFile">
 
 <jsp:include page="${requestScope.mainPartFile}" flush="true"></jsp:include>
 

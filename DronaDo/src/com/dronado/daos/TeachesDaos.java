@@ -103,6 +103,35 @@ public class TeachesDaos {
 		}
 		return tList;
 	}
+	public Teaches findByTuIdAndSId(int tuId, int sid){
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		Teaches t = null;
+		try {
+			String sql ="Select * from teaches where tuid =? and sid=?";
+			PreparedStatement pd = c.prepareStatement(sql);
+			pd.setInt(1, tuId);
+			pd.setInt(2, sid);
+			ResultSet rs = pd.executeQuery();
+			if(rs.next()) {
+				t = new Teaches();
+				t.settId(rs.getInt("tid"));
+				t.setDuration(rs.getString("duration"));
+				t.setExperience(rs.getString("experience"));
+				t.setFees(rs.getFloat("Fees")) ;
+				t.setsId(rs.getInt("sId"));
+				t.settAddress(rs.getString("tAddress"));
+				t.settAddressId(rs.getInt("tAddressId"));
+				t.setTuId(rs.getInt("tuId"));
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error in Teaches.findAllByTuIdAndSId");
+		}finally {
+			cp.putConnection(c);
+		}
+		return t;
+	}
 	public Teaches findByTId(int tid) {
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
