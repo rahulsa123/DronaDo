@@ -30,11 +30,12 @@
   	<strong>Success!</strong> Profile is updated!!!
 	</div>
  <%} %>
- <div class ="container table-responsive" >
- <table class="table table-hover" style="width:100%">
+ <div class ="fluid table-responsive"  style="min-width:100%" >
+ <table class="table table-hover">
  <tr class="">
  	<th colspan="2">
- 	<h1 class="text-info" style="text-shadow: 2px 2px 2px red;">Hello <%= (String)request.getAttribute("fullName") %> </h1>
+ 	<h1 class="text-info" style="text-shadow: 2px 2px 2px red; float: left;">Hello <%= (String)request.getAttribute("fullName") %> </h1>
+ 	<input type="button" onclick="window.location.href = '#EditProfileSection';" class="btn btn-primary" style="float: right; width: 10%; height: 20%;" id="edit" name="edit" value="Edit">
  	</th>
  </tr>
  <tr>
@@ -59,28 +60,23 @@
  	<td> <%= (String)request.getAttribute("qualification") %></td>
  </tr>
  <% } %>
- 
- 
  <tr>
  <td colspan="2">
  	<input type="hidden" id= "latitude" value="<%= request.getAttribute("latitude") %>">
  	<input type="hidden" id= "longitude"  value="<%= request.getAttribute("longitude") %>">
  	<div id="map" style="width:100%;">
  	</div>
- 
  </td>
  </tr>
  </table >
  </div>
- <br><br>
- 
- <input type="button" class="btn btn-primary" id="edit" name="edit" value="Edit" >
  <form id="editing_form"  name ="editing_form"  action="/DronaDo/Profile" method="post" style="display:none">
  <input type="hidden" id="operation" name="operation" value="None" >
  <table class="table table-hover" style="width:100%">
  <tr class="bg-dark">
  <th colspan="2" >
  <h1 class="text-info">Edit Profile</h1>
+ 
  </th>
  </tr>
  <tr>
@@ -138,19 +134,12 @@ New Address:
  </td>
  </tr>
  <% } %>
- 
- 
-
- 
- 
  <tr>
- 	<th colspan="2"><input type="button" class="btn btn-primary" value="Submit" onclick="sendData();"></th>
+ 	<th colspan="2"><input type="button" class="btn btn-primary" value="Submit"  onclick="sendData();"></th>
  </tr>
- 
- 
- 
  </table>
  </form>
+  <section id="EditProfileSection"></section>
  <br> 
 
  <script type="text/javascript">

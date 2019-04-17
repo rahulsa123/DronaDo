@@ -19,7 +19,10 @@
 	rel="stylesheet">
 <link href="/DronaDo/css/style.css" rel="stylesheet">
 <link href="/DronaDo/color/default.css" rel="stylesheet">
-
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+	integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+	crossorigin="anonymous">
 <!-- Fav and touch icons -->
 <link rel="apple-touch-icon-precomposed" sizes="144x144"
 	href="/DronaDo/ico/apple-touch-icon-144-precomposed.png">
@@ -37,7 +40,7 @@
 <body>
 	<div class="row" style="padding: 40px 40px 40px 40px;">
 		<div class="span12">
-			<h3>Complete Registration</h3>
+			<h1 style="text-shadow: 2px 2px 2px red;">Complete Registration</h1>
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#student" data-toggle="tab"><i
 						class="icon-shopping-cart"></i> Student</a></li>
@@ -47,40 +50,40 @@
 			<div class="tab-content">
 				<div class="tab-pane active" id="student">
 					<form id="studentForm" method="post"
-						action="/DronaDo/SignupServlet">
+						action="/DronaDo/SignupServlet" class>
 						<input type="hidden" name="userType" value="student">
 						<div class="form-group">
 							<label for="fullname"><i
 								class="zmdi zmdi-account material-icons-name"></i></label> <input
-								type="text" name="fullname" id="fullname"
+								type="text" name="fullname" id="fullname" class="form-control" 
 								placeholder="Your Fullname" required style="width: 1073px;" />
 
 						</div>
 						<div class="form-group">
 							<label for="email"><i class="zmdi zmdi-lock"></i></label> <input
-								type="email" name="email" id="email" placeholder="Email"
+								type="email" class="form-control" name="email" id="email" placeholder="Email"
 								required style="width: 1073px;" />
 						</div>
 						<div class="form-group">
 							<label for="phone"><i class="zmdi zmdi-lock"></i></label> <input
-								type="text" name="phone" id="phone" pattern="[6-9]{1}[0-9]{9}"
+								type="text" class="form-control" name="phone" id="phone" pattern="[6-9]{1}[0-9]{9}"
 								placeholder="Phone no." required style="width: 1074px;" />
 						</div>
 						<div class="form-group" style="height: 61px;">
 							<label for="address"><i class="zmdi zmdi-lock"></i></label> <input
-								type="text" name="address" id="address" placeholder="Address"
-								required style="width: 615px;" /><input type="button"
+								type="text" class="form-control" name="address" id="address" placeholder="Address"
+								required style="width: 615px;" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-color"
 								value="Get Current Location" onclick="getLocation()">
 						</div>
 						<div class="form-group">
 							<input type="hidden" id="new_latitude" name="new_latitude"
-								value=0> <input type="hidden" id="new_longitude"
+								value=0> <input type="hidden"  class="form-control" id="new_longitude"
 								name="new_longitude" value=0>
 						</div>
 
 						<div class="form-group form-button">
 							<div id="message">
-								&nbsp;<input type="submit" name="register" id="register"
+								&nbsp;<input type="submit" name="register" id="register" class="btn btn-color"
 									class="form-submit" value="Register">
 							</div>
 							<br>
@@ -167,7 +170,7 @@
 						<div class="form-group">
 							<label for="address"><i class="zmdi zmdi-lock"></i></label> <input
 								type="text" name="address" id="address" placeholder="Address"
-								required style="width: 574px;" /><input type="button"
+								required style="width: 574px;" /> &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-color"
 								value="Get Current Location" onclick="getLocation()">
 						</div>
 						<div class="form-group">

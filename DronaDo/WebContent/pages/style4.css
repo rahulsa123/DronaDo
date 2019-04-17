@@ -7,7 +7,15 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
 }
-
+.ui-autocomplete {
+background-color: white;
+list-style-type: disc;
+width : 50%;
+text-align: left;
+margin-left:0px;
+border-style: solid;
+cursor: pointer;
+}
 p {
     font-family: 'Poppins', sans-serif;
     font-size: 1.1em;
@@ -541,4 +549,4 @@ a.article:hover {
  }
  #target {
    width: 345px;
- }
+}

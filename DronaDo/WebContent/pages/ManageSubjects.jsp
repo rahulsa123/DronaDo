@@ -12,16 +12,7 @@
 %>
 
 
-<style>
-.ui-autocomplete {
-background-color: white;
-list-style-type: disc;
-width : 50%;
-text-align: left;
-margin-left:0px;
-border-style: solid;
-}
-</style>
+
 <script type="text/javascript">
 //document.getElementById("title").innerHTML ="Manage Subjects";
 
@@ -89,7 +80,7 @@ border-style: solid;
 	<table id="manageSubjectTable"class="table table-hover" >
 	<% if(arrSub!=null && arrSub.size()>0)  {%>
 	<thead class="bg-info" >
-		<tr style="text-shadow: 2px 2px 2px blue;">
+		<tr style="text-shadow: 1px 1px 1px white;font-size: x-large;">
 		<th>S.no</th>
 		<th>Name</th>
 		<th>Standard From</th>
