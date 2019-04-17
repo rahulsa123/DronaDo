@@ -35,6 +35,7 @@ public class StudentDashboard extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserDaos ud = new UserDaos();
 		int uid = (int)session.getAttribute("uid");
+		request.setAttribute("title", "DronaDo - Student Dashboard");
 		request.setAttribute("mainPartFile","DashboardMainPart.jsp");
 		RequestDispatcher rs = request.getRequestDispatcher("/pages/Dashboard.jsp");
 		rs.forward(request, response);

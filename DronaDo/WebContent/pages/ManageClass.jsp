@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ page language="java" import="com.dronado.daos.TutorDaos"%>
 <%@ page language="java" import="com.dronado.pojos.Tutor"%>
 <%@ page language="java" import="com.dronado.daos.AssignedDaos"%>
@@ -29,14 +30,16 @@ String userType = (String)session.getAttribute("userType");
 		
 		ArrayList<Teaches> teachList = ted.findAllByTuId(t.getTuId());
 %>
-		<div>
-			<form>
-				<label for="addSubject">Subject:</label><input class="subjects" name="addSubject" id="addSubject"><br>
-				<label for="addFees">Fees/Hour:</label><input type="number" name="addFees" id="addFees"><br>
-				<label for="addTimeFrom">Time From:</label><input type="text" name="addTimeFrom" id="addTimeFrom"><br>
-				<label for="addTimeTo">Time To:</label><input type="text" name="addTimeTo" id="addTimeTo"><br>
+<script type="text/javascript" src="/DronaDo/js/jquery-ui-1.8.5.custom.min.js"></script>
+		<div class="fluid" style="max-width: 80%;">
+			<h1 style="text-shadow: 2px 2px 2px blue; text-align: center;">Manage Class</h1><hr style="width: 3px;">
+			<form style="font-size: large; font-style: italic; text-shadow: 1px 1px 1px red;">
+				<label for="addSubject">Subject</label><input class="subjects form-control" name="addSubject" id="addSubject"><br>
+				<label for="addFees">Fees/Hour:</label><input class="form-control" type="number" name="addFees" id="addFees"><br>
+				<label for="addTimeFrom">Time From:</label><input class="form-control" type="text" name="addTimeFrom" id="addTimeFrom"><br>
+				<label for="addTimeTo">Time To:</label><input type="text" class="form-control" name="addTimeTo" id="addTimeTo"><br>
 				<label for="addDays">Days:</label>
-				<select name="addDaysVisible" multiple id="addDaysVisible">
+				<select name="addDaysVisible" class="form-control" multiple id="addDaysVisible">
 				    <option value="Sun">Sunday</option>
 				    <option value="Mon">Monday</option>
 				    <option value="Tue">Tuesday</option>
@@ -44,10 +47,10 @@ String userType = (String)session.getAttribute("userType");
 				    <option value="Thurs">Thursday</option>
 				    <option value="Fri">Friday</option>
 				    <option value="Sat">Saturday</option>
-				</select>
-				<label for="addExperience">Experience</label><input type="number" placeholder="Add experience in Year" name="addExperience" id="addExperience"><br>
-				<label for="addAddress">Address</label><input type="text" placeholder="Add Address" name="addAddress" id="addAddress"><br>
-				<input type="button" onclick="addValidate()" value="Add Class">
+				</select><br>
+				<label for="addExperience">Experience</label><input type="number" class="form-control" placeholder="Add experience in Year" name="addExperience" id="addExperience"><br>
+				<label for="addAddress">Address</label><input type="text" class="form-control" placeholder="Add Address" name="addAddress" id="addAddress"><br>
+				<input type="button" class="btn btn-primary" onclick="addValidate()" value="Add Class">
 			</form>
 		</div>
 		<hr>
@@ -141,7 +144,7 @@ String userType = (String)session.getAttribute("userType");
 						for(int k=2;k<te.getDuration().split(" & ").length;k++)
 							ss+= ","+te.getDuration().split(" & ")[k];
 						ss = ss.substring(1);
-					%><%=s %>
+					%><%=s%>
 					</td>
 					<td><%=te.getExperience() %></td>
 					<td><%=te.gettAddress() %></td>
@@ -165,9 +168,11 @@ String userType = (String)session.getAttribute("userType");
 	<input type="hidden" id="teidx" value="">
 	<input type="hidden" id="formMessage" value="">
 </form>
+<!-- 
 <script type="text/javascript" src="/DronaDo/js/jquery-1.4.2.js"></script>
-	<script type="text/javascript"
-		src="/DronaDo/js/jquery-ui-1.8.5.custom.min.js"></script>
+
+ -->
+	
 	<script>
 
 	var subjects = [<%=sd.getAllInSubjectsFromTuid(t.getTuId())%>];

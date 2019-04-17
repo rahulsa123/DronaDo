@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ page language="java" import="com.dronado.daos.SubjectDaos"%>
 <%@ page language="java" import="com.dronado.daos.TutorDaos"%>
 <%@ page language="java" import="com.dronado.pojos.Subject"%>
@@ -9,46 +10,38 @@
 	int a = (int)session.getAttribute("uid");
 	ArrayList<Integer> arrSub = td.getTuSubjects(a);
 %>
+
+
 <style>
-#"mainDiv" ul {
-background-color: black;
-
+.ui-autocomplete {
+background-color: white;
+list-style-type: disc;
+width : 50%;
+text-align: left;
+margin-left:0px;
+border-style: solid;
 }
-
-
-
-
 </style>
 <script type="text/javascript">
-document.getElementById("title").innerHTML ="Manage Subjects";
+//document.getElementById("title").innerHTML ="Manage Subjects";
+
 </script>
 <div id ="mainDiv" class="container text-center">
 	<h1 style="text-shadow: 2px 2px 3px blue;"> Manage Subjects</h1>
-	
-	<form method="post" action="/DronaDo/ManageSubjects">
+	<div id="formpart"class="fluid" style="max-width: 80%;">
+	<form method="post" action="/DronaDo/ManageSubjects"  style="font-size: large; text-align:left;font-style: italic; text-shadow: 1px 1px 1px red;">
 		<div id="all"></div>
 							<br><br>
-					<table>
-					<tr>
-						<td>
 							<label for="subjects" ><i
-								class="zmdi zmdi-account material-icons-name" ></i><h4  style="padding-right: 15px; font-style: italic;">Subject Name : </h4></label>
-						</td>
-						<td>
-							 <input	type="text"		id="subjects" class="dropdown-toggle form-control" />
-						</td>
-					</tr> 
-					<tr>
-					<td>
-						<label for="standardFrom" ><i class="zmdi zmdi-account material-icons-name"></i> <h4  style="padding-right: 15px;font-style: italic;">Standard From :</h4></label>
-					</td>
-					<td>
+								class="zmdi zmdi-account material-icons-name" ></i>Subject Name : </label>
+							 <input	type="text"	id="subjects" class="dropdown-toggle form-control" />
+						<label for="standardFrom" ><i class="zmdi zmdi-account material-icons-name"></i> Standard From :</label>
 							<select id="standardFrom" name="standardFrom" class="form-control" >
 								<option  class="dropdown-item" value="Pre-Nursery">Pre-Nursery</option>
 								<option  class="dropdown-item" value="Nursery">Nursery</option>
 								<option  class="dropdown-item" value="I">I</option>
 								<option  class="dropdown-item" value="II">II</option>
-								<option  class="dropdown-item"value="III">III</option>
+								<option  class="dropdown-item" value="III">III</option>
 								<option  class="dropdown-item" value="IV">IV</option>
 								<option  class="dropdown-item" value="V">V</option>
 								<option  class="dropdown-item" value="VI">VI</option>
@@ -62,14 +55,8 @@ document.getElementById("title").innerHTML ="Manage Subjects";
 								<option  class="dropdown-item" value="Graduation">Graduation</option>
 								<option  class="dropdown-item" value="Post Graduation">Post Graduation</option>
 							</select>
-					</td>
-					</tr>
-					<tr>
-					<td>
 						 <label for="standardTo"><i
-								class="zmdi zmdi-account material-icons-name"></i><h4  style="padding-right: 15px;font-style: italic;">Standard Upto : </h4></label>
-					</td>
-					<td>
+								class="zmdi zmdi-account material-icons-name"></i>Standard Upto : </label>
 							<select id="standardTo" name="standardTo" class="form-control">
 								<option value="Pre-Nursery">Pre-Nursery</option>
 								<option value="Nursery">Nursery</option>
@@ -89,24 +76,20 @@ document.getElementById("title").innerHTML ="Manage Subjects";
 								<option value="Graduation">Graduation</option>
 								<option value="Post Graduation">Post Graduation</option>
 							</select>
-					</td>
-					</tr>
-					<tr>
-						<td style="text-align: left;">
-					 <label for="stream"><i class="zmdi zmdi-account material-icons-name pt-0"></i><h4 >Stream : </h4></label>
-					</td>
-					<td>		
-					 <input class="form-control  dropdown-toggle"  id="addStream"> <input class="btn btn-color" type="button" onclick="addSubject()" value="Add">
-					</td>
-					</tr>
-				</table>
+					 <label for="stream"><i class="zmdi zmdi-account material-icons-name pt-0"></i>Stream : </label>
+					 <input class="form-control"  id="addStream"><br>
+					 <input class="btn btn-primary" style=" margin-top: 5px;" type="button" onclick="addSubject()" value="Add"><br><hr>
+					
 	</form>
-	<hr>
-	<h3>My Subjects</h3>
+	</div>
+
+	<h1 style="text-shadow: 2px 2px 3px blue;">My Subjects</h1>
 	<br>
-	<table class="table table-striped">
+	<div class ="table-responsive" style="max-width:100%;min-width:100%;">
+	<table id="manageSubjectTable"class="table table-hover" >
 	<% if(arrSub!=null && arrSub.size()>0)  {%>
-		<tr>
+	<thead class="bg-info" >
+		<tr style="text-shadow: 2px 2px 2px blue;">
 		<th>S.no</th>
 		<th>Name</th>
 		<th>Standard From</th>
@@ -115,23 +98,26 @@ document.getElementById("title").innerHTML ="Manage Subjects";
 		<th>Edit/Update</th>					
 		<th>Delete/Cancel</th>					
 		</tr>
-		
+	</thead>
+	<tbody >	
 		<% for (int i=0;i<arrSub.size();i++){ 
 			int idx = arrSub.get(i);
 			Subject sub = sd.getSubjectById(idx);
 		%>
 		
-			<tr>
+			<tr class="table-success">
 			<td id="sno<%=idx%>"><%=i+1 %></td>
 			<td id="sname<%=idx%>"><%=sub.getSName() %></td>
 			<td id="stdFrom<%=idx%>"><%=sub.getSStandard().split("-")[0] %></td>
 			<td id="stdTo<%=idx%>"><%=sub.getSStandard().split("-")[1] %></td>
 			<td id="stream<%=idx%>"><%=sub.getSStream() %></td>
-			<td><input type="button" id=editUpdate<%=idx%> value="Edit" onclick="editUpdate(<%=idx%>)"></td>
-			<td><input type="button" id=cancelDelete<%=idx%> value="Delete" onclick="cancelDelete(<%=idx%>)"></td>		
+			<td><input type="button" class="btn btn-primary" id=editUpdate<%=idx%> value="Edit" onclick="editUpdate(<%=idx%>)"> </td>
+			<td><input type="button" class="btn btn-primary" id=cancelDelete<%=idx%> value="Delete" onclick="cancelDelete(<%=idx%>)"></td>		
 			</tr>
 		<%} %>
+	</tbody>
 	</table>
+	</div>
 	<%} %>
 	<form id="manageSubjectsForm" action="/DronaDo/ManageSubjects" method="post">
 		<input type="hidden" id="operation" name="operation" value="">
@@ -141,11 +127,13 @@ document.getElementById("title").innerHTML ="Manage Subjects";
 		<input type="hidden" id="stdTo" name="stdTo" value="">
 		<input type="hidden" id="stream" name="stream" value="">
 	</form>
-</div>
+
+
 	<script type="text/javascript" src="/DronaDo/js/jquery-1.4.2.js"></script>
 	<script type="text/javascript"
-		src="/DronaDo/js/jquery-ui-1.8.5.custom.min.js"></script>
-		
+src="/DronaDo/js/jquery-ui-1.8.5.custom.min.js"></script>
+	
+	
 <script>
 var subjects = {};
 function cancelDelete(i){
@@ -183,14 +171,14 @@ function editUpdate(i){
 		subjects[i] = [i,document.getElementById("sname"+i).innerHTML,document.getElementById("stdFrom"+i).innerHTML,document.getElementById("stdTo"+i).innerHTML,document.getElementById("stream"+i).innerHTML];
 		document.getElementById("editUpdate"+i).value = "Update";
 		document.getElementById("cancelDelete"+i).value = "Cancel";
-		document.getElementById("sno"+i).innerHTML = "<input id=\"sno"+i+"i\" type=\"text\" value=\""+document.getElementById("sno"+i).innerHTML+"\">";
-		document.getElementById("sname"+i).innerHTML = "<input id=\"sname"+i+"i\" type=\"text\" value=\""+document.getElementById("sname"+i).innerHTML+"\">";
+		document.getElementById("sno"+i).innerHTML = "<input id=\"sno"+i+"i\" type=\"text\" class=\"form-control\" value=\""+document.getElementById("sno"+i).innerHTML+"\">";
+		document.getElementById("sname"+i).innerHTML = "<input id=\"sname"+i+"i\" type=\"text\" class=\"form-control\" value=\""+document.getElementById("sname"+i).innerHTML+"\">";
 		$("input#sname"+i+"i").autocomplete({
 			source : [<%=sd.getSubjects()%>]
 		});
-		document.getElementById("stdFrom"+i).innerHTML = "<select id=\"stdFrom"+i+"i\">"+getStandardOptions+"</select>";
-		document.getElementById("stdTo"+i).innerHTML = "<select id=\"stdTo"+i+"i\">"+getStandardOptions+"</select>";
-		document.getElementById("stream"+i).innerHTML = "<input id=\"stream"+i+"i\" type=\"text\" value=\""+document.getElementById("stream"+i).innerHTML+"\">";
+		document.getElementById("stdFrom"+i).innerHTML = "<select class=\"form-control\" id=\"stdFrom"+i+"i\">"+getStandardOptions+"</select>";
+		document.getElementById("stdTo"+i).innerHTML = "<select class=\"form-control\" id=\"stdTo"+i+"i\">"+getStandardOptions+"</select>";
+		document.getElementById("stream"+i).innerHTML = "<input id=\"stream"+i+"i\" type=\"text\" class=\"form-control\" value=\""+document.getElementById("stream"+i).innerHTML+"\">";
 		$("input#stream"+i+"i").autocomplete({
 			source : [<%=sd.getStreams()%>]
 		});	
@@ -233,12 +221,14 @@ function getStandardOptions(){
 </script>
 <script>
 $(document).ready(function() {
-	alert("running");
+	//alert("running");
 	$("input#subjects").autocomplete({
 		source : [<%=sd.getSubjects()%>]
 	});
 	$("input#addStream").autocomplete({
 		source : [<%=sd.getStreams()%>]
 	});
+	
 });
 </script>
+  </div>

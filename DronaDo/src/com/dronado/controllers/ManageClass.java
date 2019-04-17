@@ -128,7 +128,7 @@ public class ManageClass extends HttpServlet {
 		if(userType!=null && userType.equalsIgnoreCase("tutor"))
 				request.setAttribute("title", "DronaDo - Manage Class");
 		else if(userType!=null && userType.equalsIgnoreCase("student"))
-			request.setAttribute("title", "DronaDo - Class Status");
+		request.setAttribute("title", "DronaDo - Class Status");
 		request.setAttribute("mainPartFile", "ManageClass.jsp");
 		RequestDispatcher rs = request.getRequestDispatcher("/pages/Dashboard.jsp");
 		rs.forward(request, response);
