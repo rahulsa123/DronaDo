@@ -3,6 +3,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
 
  
+<%@page import="java.io.File"%>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- Popper.JS -->
@@ -11,6 +12,7 @@
 	integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
 	crossorigin="anonymous"></script>
 
+
 <div class="wrapper">
 	<!-- Sidebar  -->
 	<nav id="sidebar">
@@ -18,7 +20,13 @@
 			<h3>DronaDo</h3>
 			<strong>DD</strong>
 		</div>
+		<% 
+			if((new File(""+request.getServletContext().getRealPath("")+"/img/"+"profile"+session.getAttribute("uid"))).exists()){ 
+		%>
+		<img id="user" alt="img/default.png" class="center img-fluid mt-2" src=<%out.print("\"/DronaDo/img/profile"+session.getAttribute("uid")+"\"");%>>
+		<%} else{ %>
 		<img id="user" alt="img/default.png" class="center img-fluid mt-2" src="/DronaDo/img/face.png">
+		<%} %>
 		<ul class="list-unstyled components">
 			<li>
 				<ul>

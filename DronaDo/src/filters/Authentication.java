@@ -7,6 +7,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import com.dronado.pojos.User;
 /**
  * Servlet Filter implementation class Authentication
  */
+//@MultipartConfig
 @WebFilter("/*")
 public class Authentication implements Filter {
 
@@ -51,17 +53,18 @@ public class Authentication implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
+	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req =(HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
 		String uri = req.getRequestURI();
 		String url=req.getHeader("Referer");
-		System.out.println("url "+url+"\n uri"+uri);
+		//System.out.println("url "+url+"\n uri"+uri);
 		this.context.log("Requested Resource::" + uri);
 		if(uri.endsWith("signin.jsp")||uri.endsWith("completeRegistration.jsp")||uri.endsWith("signup.jsp")||uri.endsWith("index.jsp")||uri.endsWith("LoginServlet")||uri.endsWith("SignupServlet")||uri.endsWith("js")
-				|| uri.endsWith("css")  || uri.endsWith("jpg")|| uri.endsWith("png")|| uri.endsWith("SignUpServlet.jsp")|| uri.endsWith("html")) {
-			this.context.log("Home Page Access");
+				|| uri.endsWith("css")  || uri.endsWith("ProfileImage")|| uri.endsWith("jpg")|| uri.endsWith("png")|| uri.endsWith("SignUpServlet.jsp")|| uri.endsWith("html")) {
+			this.context.log("Home Page Access"); 
 			chain.doFilter(request, response);
 		}else {
 			UserDaos ud = new UserDaos();
@@ -76,7 +79,7 @@ public class Authentication implements Filter {
 						password = c.getValue();
 				}
 			}
-		System.out.println(username+"  "+password);
+		//System.out.println(username+"  "+password);
 		if(username!=null && password!=null &&ud.validUser(username, password)!=-1) {
 			int uid = ud.getUidByUsername(username);
 			String userType = ud.getUserTypeByUId(uid);

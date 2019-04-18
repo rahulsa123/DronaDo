@@ -22,7 +22,23 @@
 		}
 		
 	}
-		
+function getNewImage(){
+	var displayForm = document.getElementById("ProfileImageForm").value; 
+	if(displayForm =="false"){
+		document.getElementById("ProfileFormButton").style.display="block";
+		document.getElementById("ProfileImageForm").value ="true";
+	}else{
+		document.getElementById("ProfileFormButton").style.display="none";
+		document.getElementById("ProfileImageForm").value ="false";
+	}
+	
+}
+function ImageFormSubmit(){
+	 if(document.getElementById("NewProfileImage").value!=""){
+		 document.getElementById("ProfileImageEdit").value="true";
+		 document.getElementById("imageForm").submit(); 
+	 }
+}	
 </script>
  <% if((Boolean)request.getAttribute("edit")){%>
  	<div class="alert alert-success alert-dismissible">
@@ -60,6 +76,24 @@
  	<td> <%= (String)request.getAttribute("qualification") %></td>
  </tr>
  <% } %>
+ <tr>
+ 	<td>
+ 		Upload Profile Image:
+ 	</td>
+ 	<td>
+ 		<input type="button" onclick="getNewImage();" value="Upload Image" class="btn btn-primary">
+ 		<input type="hidden" id="ProfileImageForm" value="false">
+ 		<div id="ProfileFormButton" style="display: none;">
+ 			<form action="/DronaDo/ProfileImage"  id="imageForm" method="Post" enctype="multipart/form-data">
+ 				<input type="file" id="NewProfileImage" name ="NewProfileImage" accept="image/*" required="required">
+ 				<input type="hidden" id="ProfileImageEdit" name="ProfileImageEdit">
+ 				<input type="button" onclick="ImageFormSubmit();" value="Submit">
+ 			</form>
+ 		</div>
+ 	
+ 	
+ 	</td>
+ </tr>
  <tr>
  <td colspan="2">
  	<input type="hidden" id= "latitude" value="<%= request.getAttribute("latitude") %>">

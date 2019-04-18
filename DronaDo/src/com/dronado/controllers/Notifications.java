@@ -76,8 +76,9 @@ public class Notifications extends HttpServlet {
 					if(s!=null)
 						toPrint += "<div class=\"accordion-group \">" + 
 								"                  <div class=\"accordion-heading \">" + 
-								"                    <a class=\"accordion-toggle  dropdown-toggle btn btn-primary\" style=\"width:100%;text-align: left;\" data-toggle=\"collapse\" data-parent=\"#accordion2\" href=\"#"+z+"\">" + 
-								"								<i class=\"icon-plus\"></i> <<<< "+s.getStudFullName()+"(Student) At : "+ DateUtils.DateToString(i.getDate())+" </a>" + 
+								"                    <input  type=\"button\" class=\"accordion-toggle  dropdown-toggle btn btn-primary\" style=\"width:100%;text-align: left;\" value=\""+"<<<< "+s.getStudFullName()+"(Student) At : "+ DateUtils.DateToString(i.getDate())+ 
+														"\" onclick =\" popupmessage("+z+");\">"+
+								"								<i class=\"icon-plus\"></i>\n"+ 
 								"                  </div>" + 
 								"                  <div id=\""+z+"\" class=\"accordion-body collapse card \" >" + 
 								"                    <div class=\"accordion-inner  card-body  ml-5 \">" + i.getMessage()+ 
@@ -86,25 +87,27 @@ public class Notifications extends HttpServlet {
 								"                </div> <br>";
 					else {
 						Tutor t = new TutorDaos().findByUId(i.getReceiver());
-						toPrint += "<div class=\"accordion-group \">" + 
-								"                  <div class=\"accordion-heading\">" + 
-								"                    <a class=\"accordion-toggle dropdown-toggle btn btn-primary \"  style=\"width:100%;text-align: left;\" data-toggle=\"collapse\" data-parent=\"#accordion2\" href=\"#"+z+"\">" + 
-								"								<i class=\"icon-plus\"></i> <<<< "+t.getTuFullName()+"(Tutor) At : "+ DateUtils.DateToString(i.getDate())+" </a>" + 
+						toPrint += "<div class=\"accordion-group \">\n" + 
+								"                  <div class=\"accordion-heading\">\n" + 
+								"                    <input type=\"button\" class=\"accordion-toggle dropdown-toggle btn btn-primary \"  style=\"width:100%;text-align: left;\" value=\""+"<<<< "+t.getTuFullName()+"(Tutor) At : "+ DateUtils.DateToString(i.getDate())+ 
+														"\" onclick =\" popupmessage("+z+");\">"+
+														"\n" +	"<i class=\"icon-plus\"></i>"+"\n" + 
 								"                  </div>" + 
-								"                  <div id=\""+z+"\" class=\"accordion-body collapse card \"  >" + 
-								"                    <div class=\"accordion-inner card-body ml-5 \">" + i.getMessage()+ 
-								"                    </div>" + 
-								"                  </div>" + 
-								"                </div> <br>";
+								"                  <div id=\""+z+"\" class=\"card \" style=\"display:none;margin:0px 0px 0px 0px;\" >\n" + 
+								"                    <div class=\" card-body ml-5 \">" + i.getMessage()+ 
+								"                    </div>\n" + 
+								"                  </div>\n" + 
+								"                </div>\n <br>";
 					}
 			}
 			else {
 				Student s = new StudentDaos().findByUId(i.getSender());
 				if(s!=null)
 					toPrint += "<div class=\"accordion-group \">" + 
-							"                  <div class=\"accordion-heading bg-info\">" + 
-							"                    <a class=\"accordion-toggle  dropdown-toggle btn btn-primary \" data-toggle=\"collapse\" style=\"width:100%;text-align: left;\"  data-parent=\"#accordion2\" href=\"#"+z+"\">" + 
-							"								<i class=\"icon-plus\"></i> >>>> "+s.getStudFullName()+"(Student) At : "+ DateUtils.DateToString(i.getDate())+" </a>" + 
+							"                  <div class=\"accordion-heading \">" + 
+							"                    <input type=\"button\" class=\"accordion-toggle  dropdown-toggle btn btn-primary \" style=\"width:100%;text-align: left;\" value=\""+">>>> "+s.getStudFullName()+"(Student) At : "+ DateUtils.DateToString(i.getDate())+   
+												"\" onclick =\" popupmessage("+z+");\">"+
+							"								<i class=\"icon-plus\"></i> \n"+ 
 							"                  </div>" + 
 							"                  <div id=\""+z+"\" class=\"accordion-body collapse card  \" >" + 
 							"                    <div class=\"accordion-inner  card-body  ml-5\">" + i.getMessage()+ 
@@ -113,22 +116,23 @@ public class Notifications extends HttpServlet {
 							"                </div> <br>";
 				else {
 					Tutor t = new TutorDaos().findByUId(i.getSender());
-					toPrint +=  "<div class=\"accordion-group \">" + 
-							"                  <div class=\"accordion-heading\">" + 
-							"                    <a class=\"accordion-toggle dropdown-toggle btn btn-primary \" data-toggle=\"collapse\" data-parent=\"#accordion2\" href=\"#"+z+"\">" + 
-							"								<i class=\"icon-plus\"></i> >>>> "+t.getTuFullName()+"(Tutor) At : "+ DateUtils.DateToString(i.getDate())+" </a>" + 
-							"                  </div>" + 
-							"                  <div id=\""+z+"\" class=\"accordion-body collapse card\" >" + 
+					toPrint +=  "<div class=\"accordion-group \">\n" + 
+							"                  <div class=\"accordion-heading\">\n" + 
+							"                    <input type=\"button\" class=\"accordion-toggle dropdown-toggle btn btn-primary \" style=\"width:100%;text-align: left;\" value=\""+">>>> "+t.getTuFullName()+"(Tutor) At : "+ DateUtils.DateToString(i.getDate())+"\n" + 
+											"\" onclick =\" popupmessage("+z+");\">"+
+							"								<i class=\"icon-plus\"></i> "+ 
+							"                  </div>\n" + 
+							"                  <div id=\""+z+"\" class=\"accordion-body collapse card\" >\n" + 
 							"                    <div class=\"accordion-inner card-body ml-5 \">" + i.getMessage()+ 
-							"                    </div>" + 
-							"                  </div>" + 
-							"                </div> <br>";
+							"                    </div>\n" + 
+							"                  </div>\n" + 
+							"                </div>\n <br>";
 				}
 			}
 			z+=1;
 		}
 		request.setAttribute("notifications", toPrint);
-		System.out.println(toPrint);
+		//System.out.println(toPrint);
 		request.setAttribute("title", "Dashboard - Notification");
 		request.setAttribute("mainPartFile", "Notification.jsp");
 		RequestDispatcher rs = request.getRequestDispatcher("/pages/Dashboard.jsp");

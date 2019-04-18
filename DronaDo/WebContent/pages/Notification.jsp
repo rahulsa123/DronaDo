@@ -9,7 +9,7 @@
 		s = new UserDaos().getAllTutorUsernameInString();
 	}
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -67,7 +67,7 @@
 			</td>
 			<td>
 				<input
-				type="submit" class="btn btn-primary" value="Send">
+				type="submit" class="btn btn-primary" value="Send" >
 			</td>
 		</tr>
 			  
@@ -77,7 +77,7 @@
 		</form>
 	
 	</div>
-	<div class="accordion" id="accordion2">
+	<div class="accordion fluid" id="accordion2" style="min-width: 80%;">
 			${requestScope.notifications}
 		</div>
 	<script src="/DronaDo/js/jquery.min.js"></script>
@@ -130,6 +130,13 @@
 				document.getElementById("messageBlock").style.display = "block";
 			else
 				document.getElementById("messageBlock").style.display = "none";
+		}
+		function popupmessage(n){
+			var message = document.getElementById(String(n));
+			if(message.style.display=="none")
+				message.style.display="block";
+			else
+				message.style.display="none";
 		}
 	</script>
 </body>

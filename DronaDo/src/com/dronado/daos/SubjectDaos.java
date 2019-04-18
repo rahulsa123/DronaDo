@@ -131,7 +131,7 @@ public class SubjectDaos {
 		Connection conn = pool.getConnection();
 		String subList = "";
 		try {
-			String sql = "SELECT sname FROM subject;";
+			String sql = "SELECT distinct sname FROM subject;";
 			Statement ps = conn.createStatement();
 			ResultSet rs =ps.executeQuery(sql);
 			while(rs.next()) {
@@ -195,7 +195,7 @@ public class SubjectDaos {
 		Connection conn = pool.getConnection();
 		String streamList = "";
 		try {
-			String sql = "SELECT sstream FROM subject;";
+			String sql = "SELECT distinct sstream FROM subject;";
 			Statement ps = conn.createStatement();
 			ResultSet rs =ps.executeQuery(sql);
 			while(rs.next()) {

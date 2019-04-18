@@ -9,7 +9,7 @@ body {
 }
 .ui-autocomplete {
 background-color: white;
-list-style-type: disc;
+list-style-type: none;
 width : 50%;
 text-align: left;
 margin-left:0px;

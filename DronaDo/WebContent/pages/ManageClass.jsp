@@ -92,7 +92,12 @@ String userType = (String)session.getAttribute("userType");
 							str = str.substring(1);
 						%>
 					<td id="days<%=te.gettId()%>"><%=str%></td>
-					<%}catch(Exception e){e.printStackTrace();} %>
+					<%}catch(Exception e){e.printStackTrace();
+					%>
+					</td>
+					<td  id="days<%=te.gettId()%>"></td>
+					<% 
+					} %>
 					<td id="experience<%=te.gettId()%>"><%=te.getExperience()%></td>
 					<td id="address<%=te.gettId()%>"><%=te.gettAddress()%></td>
 					<td><input type="button" id="editUpdate<%=te.gettId()%>" value="Edit" onclick="editUpdate(<%=te.gettId()%>)"></td>

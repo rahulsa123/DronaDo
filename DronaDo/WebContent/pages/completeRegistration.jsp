@@ -4,12 +4,13 @@
 <%
 	SubjectDaos sd = new SubjectDaos();
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>DronaDo - Registration</title>
 <link href="/DronaDo/css/bootstrap.css" rel="stylesheet">
+<link href="/DronaDo/pages/style4.css" rel="stylesheet">
 <link href="/DronaDo/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="/DronaDo/css/prettyPhoto.css" rel="stylesheet">
 <link href="/DronaDo/font/stylesheet.css" rel="stylesheet">

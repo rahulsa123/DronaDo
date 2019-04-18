@@ -84,6 +84,8 @@ ArrayList<Tutor> allTutor = td.findAllTutor();
 SubjectDaos sd = new SubjectDaos(); 
 UserDaos ud = new UserDaos();
 for(Tutor t : allTutor){
+	if(t.getTuSubjects().get(0)==0)
+		continue;
 	System.out.println(t.getTuSubjects());	
 	String username = ud.getUsernameByUId(t.getUId());
 	for(int sid : t.getTuSubjects()){
