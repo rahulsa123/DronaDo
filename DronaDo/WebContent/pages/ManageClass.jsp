@@ -179,7 +179,12 @@ String userType = (String)session.getAttribute("userType");
  -->
 	
 	<script>
-
+	<%
+		try{
+		System.out.println("t="+t);
+		System.out.println("t.getTuId() = " + t.getTuId());	
+		System.out.println("sd.getAllInSubjectsFromTuid(t.getTuId()) = " + sd.getAllInSubjectsFromTuid(t.getTuId()));
+	%>
 	var subjects = [<%=sd.getAllInSubjectsFromTuid(t.getTuId())%>];
 	$(document).ready(function(){
 		alert("running");
@@ -187,6 +192,13 @@ String userType = (String)session.getAttribute("userType");
 		source:[<%=sd.getAllInSubjectsFromTuid(t.getTuId())%>]
 		});
 	});
+	<%		
+		}catch(Exception e){
+			System.out.println("Exception caught");
+			System.out.println(e);
+		}
+	%>
+	
 	var tutorData = {};
 	function editUpdate(idx){
 		if(document.getElementById("editUpdate"+idx).value == "Edit"){

@@ -9,7 +9,7 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-    $('#sidebarCollapse').on('click', function () {
+    $('#sidebarCollapse').click(function () {
         $('#sidebar').toggleClass('active');
     });
 
