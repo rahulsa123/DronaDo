@@ -1,12 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page language="java" import="com.dronado.daos.UserDaos"%>
+<%@ page language="java" import="java.util.ArrayList"%>
+<%@ page language="java" import="com.dronado.daos.*"%>
+<%@ page language="java" import="com.dronado.pojos.*"%>
+<%@ page language="java" import="com.dronado.utilities.DateUtils"%>
 <%
-	String s = "";
-	if (((String) request.getSession().getAttribute("userType")).equalsIgnoreCase("student")) {
-		s = new UserDaos().getAllStudentUsernameInString();
-	} else {
-		s = new UserDaos().getAllTutorUsernameInString();
+String s = "";	
+int uid =-1;
+	try{
+	
+			
+	
+		if (((String) request.getSession().getAttribute("userType")).equalsIgnoreCase("tutor")) {
+			s = new UserDaos().getAllStudentUsernameInString();
+		} else {
+			s = new UserDaos().getAllTutorUsernameInString();
+		}
+		 uid = (int)request.getSession().getAttribute("uid");
+		
+		 if(request.getParameter("nid")!=null){
+			 new NotificationDaos().remove(Integer.parseInt(request.getParameter("nid")));
+		 }
+	}catch(Exception e){
+		System.out.println("Exception caught");
+		System.out.println(e);
+		System.out.println(request.getAttribute("uid"));
 	}
 %>
 <!DOCTYPE html>
@@ -30,56 +48,184 @@
 </head>
 <body>
 	<div class="span12" style="padding: 30px 30px 30px 30px">
-		
-<h1 style="text-shadow: 3px 3px 5px red; float:left;">Notifications</h1>
-<a class="btn btn-primary" style="float:right;" onclick="newMessage()">New Message</a>
-		
+
+		<h1 style="text-shadow: 3px 3px 5px red; float: left;">Notifications</h1>
+		<a class="btn btn-primary" style="float: right;"
+			onclick="newMessage()">New Message</a>
+
 	</div>
-	<div class="span12 table-responsive" id="messageBlock" style="display:none; width: 100%">
-	
+	<div class="span12 table-responsive" id="messageBlock"
+		style="display: none; width: 100%">
+
 		<form method="post" action="/DronaDo/Notifications"
 			onsubmit="return validate()">
-		<table class="table bg-white" style="min-width:100%;max-width:100%">
-		<tr>  <td colspan="2">
-						<input type="hidden" id="isFormSubmitted" name="isFormSubmitted"
-					value="false"> 
-					<input type="hidden" name ="all" id="all">
-					<input type="text" class="form-control"  id="all1"
-					placeholder="No Receivers added" style="height:50px;" disabled="disabled">
-					
-					<label for="users"><i
-					class="zmdi zmdi-account material-icons-name"></i></label>				
-					     
-				</td>     
-		</tr>
-		<tr>
-			<td>
-				<input class="form-control" id="users"  />	
-			</td>
-			<td>
-				<input type="button" class="btn btn-primary"
-				onclick="addReceivers()" value="Add">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<textarea  class="form-control" name="message" id="message" placeholder="Write a message"></textarea>
-			</td>
-			<td>
-				<input
-				type="submit" class="btn btn-primary" value="Send" >
-			</td>
-		</tr>
-			  
-			
-			
-		</table>
+			<table class="table bg-white"
+				style="min-width: 100%; max-width: 100%">
+				<tr>
+					<td colspan="2"><input type="hidden" id="isFormSubmitted"
+						name="isFormSubmitted" value="false"> <input type="hidden"
+						name="all" id="all"> <input type="text"
+						class="form-control" id="all1" placeholder="No Receivers added"
+						style="height: 50px;" disabled="disabled"> <label
+						for="users"><i
+							class="zmdi zmdi-account material-icons-name"></i></label></td>
+				</tr>
+				<tr>
+					<td><input class="form-control" id="users" /></td>
+					<td><input type="button" class="btn btn-primary"
+						onclick="addReceivers()" value="Add"></td>
+				</tr>
+				<tr>
+					<td><textarea class="form-control" name="message" id="message"
+							placeholder="Write a message"></textarea></td>
+					<td><input type="submit" class="btn btn-primary" value="Send">
+					</td>
+				</tr>
+
+
+
+			</table>
 		</form>
-	
+
 	</div>
 	<div class="accordion fluid" id="accordion2" style="min-width: 80%;">
-			${requestScope.notifications}
-		</div>
+
+		<%
+			NotificationDaos nd = new NotificationDaos();
+			ArrayList<Notification> all = nd.findBySenderOrReceiverUId(uid);
+			int z=0;
+			for (Notification i: all) {
+				if(i.getSender() == uid) {
+					System.out.println("i.getSender() == uid");
+						Student stu = new StudentDaos().findByUId(i.getReceiver());
+						if(stu!=null) {
+							
+								System.out.println("i.getType().indexOf(\"request\")!=-1 else");
+
+			%>
+									<div class="accordion-group ">
+										<div class="accordion-heading ">
+											<input type="button"
+												class="accordion-toggle  dropdown-toggle btn btn-primary"
+												style="width: 100%; text-align: left;"
+												value="<<<< <%=stu.getStudFullName() %> (<%= stu.getUsername()%>,Student) At : <%=DateUtils.DateToString(i.getDate()) %>"
+												onclick="popupmessage(<%=z %>)"> <i class="icon-plus"></i>
+										</div>
+										<div id="<%=z %>" class="accordion-body collapse card ">
+											<div class="accordion-inner  card-body  ml-5 ">
+												<%=i.getMessage()%>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<br>
+
+			<%
+						
+					} else {
+						Tutor t = new TutorDaos().findByUId(i.getReceiver());
+						if(i.getType().indexOf("request")!=-1) {
+							System.out.println(i.getType().indexOf("request")!=-1);
+							int sid = Integer.parseInt(i.getType().split("&")[1]);
+							Subject sub = new SubjectDaos().getSubjectById(sid);
+		%>
+							<div class="accordion-group ">
+								<div class="accordion-heading ">
+									<input type="button"
+										class="accordion-toggle  dropdown-toggle btn btn-primary"
+										style="width: 100%; text-align: left;"
+										value="<<<< <%=t.getTuFullName() %> (<%= t.getUsername()%>,Tutor) At : <%=DateUtils.DateToString(i.getDate()) %>"
+										onclick="popupmessage(<%=z %>)"> <i class="icon-plus"></i>
+								</div>
+								<div id="<%=z %>" class="accordion-body collapse card ">
+									<div class="accordion-inner  card-body  ml-5 ">
+										You requested to study
+										<%= sub.getSName()%>
+										|
+										<%=sub.getSStandard().split("-")[0] %>
+										to
+										<%= sub.getSStandard().split("-")[1] %>
+										|
+										<%= sub.getSStream() %>
+									<input type="button" class="btn btn-primary" value="Delete"
+												onclick="deleteRequest(<%=i.getnId()%>)">
+									</div>
+								</div>
+								<br>
+
+		<%				}else{
+		%>
+								<div class="accordion-group ">
+									<div class="accordion-heading ">
+										<input type="button"
+											class="accordion-toggle  dropdown-toggle btn btn-primary"
+											style="width: 100%; text-align: left;"
+											value="<<<< <%=t.getTuFullName() %> (<%= t.getUsername()%>,Tutor) At : <%=DateUtils.DateToString(i.getDate()) %>"
+											onclick="popupmessage(<%=z %>)"> <i class="icon-plus"></i>
+									</div>
+									<div id="<%=z %>" class="card "
+										style="display: none; margin: 0px 0px 0px 0px;">
+										<div class=" card-body  ml-5 ">
+											<%=i.getMessage()%>
+										</div>
+									</div>
+								</div>
+								<br>
+						
+
+		<%				}
+					}
+				} else {
+					Student stu = new StudentDaos().findByUId(i.getSender());
+					if (stu != null){
+					
+		%>
+							<div class="accordion-group ">
+								<div class="accordion-heading ">
+									<input type="button"
+										class="accordion-toggle  dropdown-toggle btn btn-primary"
+										style="width: 100%; text-align: left;"
+										value=">>>> <%=stu.getStudFullName() %> (<%= stu.getUsername()%>,Student) At : <%=DateUtils.DateToString(i.getDate()) %>"
+										onclick="popupmessage(<%=z %>)"> <i class="icon-plus"></i>
+								</div>
+								<div id="<%=z %>" class="accordion-body collapse card "
+									style="display: none; margin: 0px 0px 0px 0px;">
+									<div class="accordion-inner  card-body  ml-5 ">
+										<%=i.getMessage()%>
+									</div>
+								</div>
+							</div>
+							<br>
+
+		<%			}else {
+						Tutor t = new TutorDaos().findByUId(i.getSender());
+		%>
+					
+							<div class="accordion-group ">
+								<div class="accordion-heading ">
+									<input type="button"
+										class="accordion-toggle  dropdown-toggle btn btn-primary"
+										style="width: 100%; text-align: left;"
+										value=">>>> <%=t.getTuFullName() %> (<%= t.getUsername()%>,Tutor) At : <%=DateUtils.DateToString(i.getDate()) %>"
+										onclick="popupmessage(<%=z %>)"> <i class="icon-plus"></i>
+								</div>
+								<div id="<%=z %>" class="accordion-body collapse card "
+									style="display: none; margin: 0px 0px 0px 0px;">
+									<div class="accordion-inner  card-body  ml-5 ">
+										<%=i.getMessage()%>
+									</div>
+								</div>
+							</div>
+							<br>
+					
+		<%			}
+				}
+				z += 1;
+			}
+		
+		%>
+	</div>
 	<script src="/DronaDo/js/jquery.min.js"></script>
 	<script src="/DronaDo/js/jquery.easing.js"></script>
 	<script src="/DronaDo/js/bootstrap.js"></script>
@@ -137,6 +283,11 @@
 				message.style.display="block";
 			else
 				message.style.display="none";
+		}
+		
+		function deleteRequest(nid){
+			alert(nid);
+			$("#mainPartFile").load("/DronaDo/pages/Notification.jsp?nid="+nid);
 		}
 	</script>
 </body>

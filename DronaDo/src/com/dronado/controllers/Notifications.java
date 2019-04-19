@@ -67,71 +67,7 @@ public class Notifications extends HttpServlet {
 			}
 			}
 		}
-		ArrayList<Notification> all = nd.findBySenderOrReceiverUId(uid);
-		String toPrint ="";
-		int z=0;
-		for (Notification i: all) {
-			if(i.getSender() == uid) {
-					Student s = new StudentDaos().findByUId(i.getReceiver());
-					if(s!=null)
-						toPrint += "<div class=\"accordion-group \">" + 
-								"                  <div class=\"accordion-heading \">" + 
-								"                    <input  type=\"button\" class=\"accordion-toggle  dropdown-toggle btn btn-primary\" style=\"width:100%;text-align: left;\" value=\""+"<<<< "+s.getStudFullName()+"(Student) At : "+ DateUtils.DateToString(i.getDate())+ 
-														"\" onclick =\" popupmessage("+z+");\">"+
-								"								<i class=\"icon-plus\"></i>\n"+ 
-								"                  </div>" + 
-								"                  <div id=\""+z+"\" class=\"accordion-body collapse card \" >" + 
-								"                    <div class=\"accordion-inner  card-body  ml-5 \">" + i.getMessage()+ 
-								"                    </div>" + 
-								"                  </div>" + 
-								"                </div> <br>";
-					else {
-						Tutor t = new TutorDaos().findByUId(i.getReceiver());
-						toPrint += "<div class=\"accordion-group \">\n" + 
-								"                  <div class=\"accordion-heading\">\n" + 
-								"                    <input type=\"button\" class=\"accordion-toggle dropdown-toggle btn btn-primary \"  style=\"width:100%;text-align: left;\" value=\""+"<<<< "+t.getTuFullName()+"(Tutor) At : "+ DateUtils.DateToString(i.getDate())+ 
-														"\" onclick =\" popupmessage("+z+");\">"+
-														"\n" +	"<i class=\"icon-plus\"></i>"+"\n" + 
-								"                  </div>" + 
-								"                  <div id=\""+z+"\" class=\"card \" style=\"display:none;margin:0px 0px 0px 0px;\" >\n" + 
-								"                    <div class=\" card-body ml-5 \">" + i.getMessage()+ 
-								"                    </div>\n" + 
-								"                  </div>\n" + 
-								"                </div>\n <br>";
-					}
-			}
-			else {
-				Student s = new StudentDaos().findByUId(i.getSender());
-				if(s!=null)
-					toPrint += "<div class=\"accordion-group \">" + 
-							"                  <div class=\"accordion-heading \">" + 
-							"                    <input type=\"button\" class=\"accordion-toggle  dropdown-toggle btn btn-primary \" style=\"width:100%;text-align: left;\" value=\""+">>>> "+s.getStudFullName()+"(Student) At : "+ DateUtils.DateToString(i.getDate())+   
-												"\" onclick =\" popupmessage("+z+");\">"+
-							"								<i class=\"icon-plus\"></i> \n"+ 
-							"                  </div>" + 
-							"                  <div id=\""+z+"\" class=\"accordion-body collapse card  \" >" + 
-							"                    <div class=\"accordion-inner  card-body  ml-5\">" + i.getMessage()+ 
-							"                    </div>" + 
-							"                  </div>" + 
-							"                </div> <br>";
-				else {
-					Tutor t = new TutorDaos().findByUId(i.getSender());
-					toPrint +=  "<div class=\"accordion-group \">\n" + 
-							"                  <div class=\"accordion-heading\">\n" + 
-							"                    <input type=\"button\" class=\"accordion-toggle dropdown-toggle btn btn-primary \" style=\"width:100%;text-align: left;\" value=\""+">>>> "+t.getTuFullName()+"(Tutor) At : "+ DateUtils.DateToString(i.getDate())+"\n" + 
-											"\" onclick =\" popupmessage("+z+");\">"+
-							"								<i class=\"icon-plus\"></i> "+ 
-							"                  </div>\n" + 
-							"                  <div id=\""+z+"\" class=\"accordion-body collapse card\" >\n" + 
-							"                    <div class=\"accordion-inner card-body ml-5 \">" + i.getMessage()+ 
-							"                    </div>\n" + 
-							"                  </div>\n" + 
-							"                </div>\n <br>";
-				}
-			}
-			z+=1;
-		}
-		request.setAttribute("notifications", toPrint);
+		
 		//System.out.println(toPrint);
 		request.setAttribute("title", "Dashboard - Notification");
 		request.setAttribute("mainPartFile", "Notification.jsp");

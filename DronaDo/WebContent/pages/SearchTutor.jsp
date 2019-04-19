@@ -21,7 +21,7 @@ try{
 	Teaches te = new TeachesDaos().findByTuIdAndSId(t, s);
 	Student stu = new StudentDaos().findByUId((int)session.getAttribute("uid"));
 	Subject sub = new SubjectDaos().getSubjectById(s);
-	new NotificationDaos().insert(new Notification(0,new java.util.Date(),(int)session.getAttribute("uid"),new TutorDaos().findByTuId(t).getUId(),stu.getStudFullName()+" has request to study " + sub.getSName() + "|" + sub.getSStandard() + "|" + sub.getSStream(),"request"+"&"+stu.getStudId()));
+	new NotificationDaos().insert(new Notification(0,new java.util.Date(),(int)session.getAttribute("uid"),new TutorDaos().findByTuId(t).getUId(),stu.getStudFullName()+" has request to study " + sub.getSName() + "|" + sub.getSStandard() + "|" + sub.getSStream(),"request"+"&"+s));
 %>
 	 <div class="alert alert-success alert-dismissible">
  	<button type="button" class="close" data-dismiss="alert">&times;</button>

@@ -37,6 +37,21 @@ public class NotificationDaos {
 		return nid;
 	}
 	
+	public void remove(int ni) {
+		ConnectionPool cp =  ConnectionPool.getInstance();
+		Connection c  =  cp.getConnection();
+		try {
+			String sql = " DELETE FROM notification WHERE nid=?";
+			PreparedStatement pd = c.prepareStatement(sql);
+			pd.setInt(1, ni);
+			pd.executeUpdate();
+		}catch (Exception e) {
+			System.out.println("Error in NotificationDaos.Remove "+e);
+		}finally {
+			cp.putConnection(c);
+		}
+	}
+	
 	public void edit( Notification n) {
 		ConnectionPool cp =  ConnectionPool.getInstance();
 		Connection c  =  cp.getConnection();
