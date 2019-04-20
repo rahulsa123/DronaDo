@@ -80,6 +80,11 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("uid", uid);
 			session.setAttribute("userType", "tutor");
 			response.sendRedirect("TutorDashboard");
+		}else  if(userType.equalsIgnoreCase("admin")){
+			session.setAttribute("uid", uid);
+			session.setAttribute("userType", "admin");
+			RequestDispatcher rd = request.getRequestDispatcher("/AdminHome");
+			rd.forward(request, response);
 		}
 		}
 		catch(Exception e) {	

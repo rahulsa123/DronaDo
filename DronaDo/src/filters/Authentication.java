@@ -63,8 +63,8 @@ public class Authentication implements Filter {
 		//System.out.println("url "+url+"\n uri"+uri);
 		this.context.log("Requested Resource::" + uri);
 		if(uri.endsWith("signin.jsp")||uri.endsWith("completeRegistration.jsp")||uri.endsWith("signup.jsp")||uri.endsWith("index.jsp")||uri.endsWith("LoginServlet")||uri.endsWith("SignupServlet")||uri.endsWith("js")
-				|| uri.endsWith("css")  || uri.endsWith("ProfileImage")|| uri.endsWith("jpg")|| uri.endsWith("png")|| uri.endsWith("SignUpServlet.jsp")|| uri.endsWith("html")) {
-			this.context.log("Home Page Access"); 
+				|| uri.endsWith("css")  || uri.endsWith("ProfileImage")|| uri.endsWith("jpg")|| uri.endsWith("png")||  uri.endsWith("html")||uri.endsWith("Logout")) {
+			 
 			chain.doFilter(request, response);
 		}else {
 			UserDaos ud = new UserDaos();
@@ -92,7 +92,12 @@ public class Authentication implements Filter {
 				session.setAttribute("uid", uid);
 				session.setAttribute("userType", "tutor");
 				chain.doFilter(request, response);
+			}else  if(userType.equalsIgnoreCase("admin")){
+				session.setAttribute("uid", uid);
+				session.setAttribute("userType", "admin");
+				chain.doFilter(request, response);
 			}
+			
 		}	
 		else if(session.getAttribute("userType")!=null && session.getAttribute("uid")!=null) {
 			String userType = (String)session.getAttribute("userType");
@@ -106,6 +111,10 @@ public class Authentication implements Filter {
 				else  if(userType.equalsIgnoreCase("tutor")){
 					session.setAttribute("uid", uid);
 					session.setAttribute("userType", "tutor");
+					chain.doFilter(request, response);
+				}else  if(userType.equalsIgnoreCase("admin")){
+					session.setAttribute("uid", uid);
+					session.setAttribute("userType", "admin");
 					chain.doFilter(request, response);
 				}
 			}

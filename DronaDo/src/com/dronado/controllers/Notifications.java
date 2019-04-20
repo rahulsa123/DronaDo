@@ -73,7 +73,7 @@ public class Notifications extends HttpServlet {
 		request.setAttribute("mainPartFile", "Notification.jsp");
 		RequestDispatcher rs = request.getRequestDispatcher("/pages/Dashboard.jsp");
 		rs.forward(request, response);
-		}
+		}  
 		catch(Exception e) {
 			//System.out.println(e);
 			e.printStackTrace();

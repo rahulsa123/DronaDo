@@ -32,6 +32,7 @@ public class Logout extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("uid", -1);
 		session.setAttribute("userType", null);
+		System.out.println("In Logout");
 		Cookie[] cookies = request.getCookies();
 		for(Cookie c1:cookies) {
 			if (cookies != null)
@@ -42,6 +43,7 @@ public class Logout extends HttpServlet {
 		            response.addCookie(cookie);
 		        }
 		}
+		System.out.println("In Logout");
 		response.sendRedirect("/DronaDo/pages/index.jsp");
 	}
 
@@ -50,6 +52,7 @@ public class Logout extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("In Logout post");
 		doGet(request, response);
 	}
 
