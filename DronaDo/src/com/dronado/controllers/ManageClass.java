@@ -108,13 +108,15 @@ public class ManageClass extends HttpServlet {
 				}
 				new TeachesDaos().insert(new Teaches(0, sid, new TutorDaos().findByUId(uid).getTuId(), fees, duration, address, new TutorDaos().findByUId(uid).getTuAddressId(), ""+experience));
 			}else if(operation.equalsIgnoreCase("Exit")) {
-				Assigned a = new AssignedDaos().getAssignedById(Integer.parseInt(request.getParameter("teid")));
+				Assigned a = new AssignedDaos().getAssigned(Integer.parseInt(request.getParameter("teidx")),new StudentDaos().findByUId(uid).getStudId());
+				System.out.println("a="+a);
 				new AssignedDaos().removeById(a.getaId());
+				System.out.println(new TutorDaos().findByTuId(new TeachesDaos().findByTId(a.gettId()).getTuId()).getUId());
 				Notification n = new Notification(0,new java.util.Date(),uid,new TutorDaos().findByTuId(new TeachesDaos().findByTId(a.gettId()).getTuId()).getUId(),"Student has left the class","exit");
 				new NotificationDaos().insert(n);
 			}
 			else if(operation.equalsIgnoreCase("MessageByTutor")) {
-				String message = request.getParameter("message");
+				String message = request.getParameter("formMessage");
 				for(Student s: new AssignedDaos().findAllStudentByTid(Integer.parseInt(request.getParameter("formSno")))) {
 					Notification n = new Notification(0,new java.util.Date(),uid,s.getUId(),message,"close");
 					new NotificationDaos().insert(n);

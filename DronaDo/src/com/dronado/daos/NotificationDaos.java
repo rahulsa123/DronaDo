@@ -67,6 +67,7 @@ public class NotificationDaos {
 			pd.executeUpdate();
 		}catch (Exception e) {
 			System.out.println("Error in NotificationDaos.edit "+e);
+			e.printStackTrace();
 		}finally {
 			cp.putConnection(c);
 		}

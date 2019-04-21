@@ -170,8 +170,8 @@ String userType = (String)session.getAttribute("userType");
 	<input type="hidden" id="formExperience" name="formExperience" value="">
 	<input type="hidden" id="formAddress" name="formAddress" value="">
 	<input type="hidden" id="operation" name="operation" value="">
-	<input type="hidden" id="teidx" value="">
-	<input type="hidden" id="formMessage" value="">
+	<input type="hidden" id="teidx" name="teidx" value="">
+	<input type="hidden" id="formMessage" name="formMessage" value="">
 </form>
 <!-- 
 <script type="text/javascript" src="/DronaDo/js/jquery-1.4.2.js"></script>

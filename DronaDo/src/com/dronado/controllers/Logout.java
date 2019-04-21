@@ -43,7 +43,11 @@ public class Logout extends HttpServlet {
 		            response.addCookie(cookie);
 		        }
 		}
+
 		System.out.println("In Logout");
+
+		System.out.println("in log out");
+
 		response.sendRedirect("/DronaDo/pages/index.jsp");
 	}
 

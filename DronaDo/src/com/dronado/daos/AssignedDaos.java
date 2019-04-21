@@ -159,7 +159,7 @@ public class AssignedDaos {
 		Connection c = cp.getConnection();
 		Assigned a = new Assigned();
 		try {
-			String sql = "SELECT aid FROM assigned WHERE tid =? and studid=?";
+			String sql = "SELECT * FROM assigned WHERE tid =? and studid=?";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setInt(1, tid);
 			ps.setInt(2, studid);

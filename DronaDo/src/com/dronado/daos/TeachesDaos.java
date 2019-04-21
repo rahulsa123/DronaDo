@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.dronado.pojos.Subject;
 import com.dronado.pojos.Teaches;
 import com.dronado.utilities.ConnectionPool;
 
@@ -103,6 +104,39 @@ public class TeachesDaos {
 		}
 		return tList;
 	}
+	public ArrayList<Teaches> findByTuIdAndSIdSimilar(int tuId, int sid){
+		ConnectionPool cp = ConnectionPool.getInstance();
+		Connection c = cp.getConnection();
+		ArrayList<Teaches> tList = new ArrayList<Teaches>();
+		try {
+			String sql ="Select * from teaches where tuid =?";
+			PreparedStatement pd = c.prepareStatement(sql);
+			pd.setInt(1, tuId);
+			ResultSet rs = pd.executeQuery();
+			Subject sub = new SubjectDaos().getSubjectById(sid);
+			while(rs.next()) {
+				Subject s = new SubjectDaos().getSubjectById(rs.getInt("sId"));
+				if(s.getSName().equals(sub.getSName()) && s.getSStandard().equals(sub.getSStandard()) && s.getSStream().equals(sub.getSStream())) {
+					Teaches t = new Teaches();
+					t.settId(rs.getInt("tid"));
+					t.setDuration(rs.getString("duration"));
+					t.setExperience(rs.getString("experience"));
+					t.setFees(rs.getFloat("Fees")) ;
+					t.setsId(rs.getInt("sId"));
+					t.settAddress(rs.getString("tAddress"));
+					t.settAddressId(rs.getInt("tAddressId"));
+					t.setTuId(rs.getInt("tuId"));
+					tList.add(t);
+				}
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error in Teaches.findAllByTuIdAndSIdSimilar");
+		}finally {
+			cp.putConnection(c);
+		}
+		return tList;
+	}
 	public Teaches findByTuIdAndSId(int tuId, int sid){
 		ConnectionPool cp = ConnectionPool.getInstance();
 		Connection c = cp.getConnection();
@@ -163,10 +197,6 @@ public class TeachesDaos {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		TeachesDaos td = new TeachesDaos();
-		Teaches t = new Teaches(2, 3, 2, 400.90f, " 9 month", "Tcycyc", 1, "  month");
-		System.out.println(td.insert(t));
-	System.out.println(td.findByTId(8));
-	System.out.println("Hello");
 	}
 
 }

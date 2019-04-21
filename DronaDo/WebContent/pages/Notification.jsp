@@ -21,8 +21,27 @@ int uid =-1;
 		 if(request.getParameter("nid")!=null){
 			 new NotificationDaos().remove(Integer.parseInt(request.getParameter("nid")));
 		 }
+		 if(request.getParameter("mode")!=null){
+			 int nid = Integer.parseInt(request.getParameter("noid")); 
+			 System.out.println(nid);
+			 Notification n = new NotificationDaos().findByNotificationId(nid);
+			 System.out.println(n);
+			 if(request.getParameter("mode").equalsIgnoreCase("accept")){
+				 int studid = Integer.parseInt(request.getParameter("studid"));
+				 int teid = Integer.parseInt(request.getParameter("teid"));
+				 System.out.println("studid="+studid + "teid = "+teid);
+				 new AssignedDaos().insert(new Assigned(0,studid,teid,new java.util.Date()));
+				 n.setType("accepted");
+				 n.setMessage(n.getMessage() + "\n Request has been accepted. View class details in CLASS STATUS");
+				 new NotificationDaos().edit(n);
+			 }else if(request.getParameter("mode").equalsIgnoreCase("reject")){
+				 n.setType("rejected");
+				 n.setMessage(n.getMessage() + "\n Yor request has been rejected");
+				 new NotificationDaos().edit(n);
+			 }
+		 }
 	}catch(Exception e){
-		System.out.println("Exception caught");
+		System.out.println("Exception caught error here in notification.jsp first block of code");
 		System.out.println(e);
 		System.out.println(request.getAttribute("uid"));
 	}
@@ -179,6 +198,43 @@ int uid =-1;
 				} else {
 					Student stu = new StudentDaos().findByUId(i.getSender());
 					if (stu != null){
+						if(i.getType().indexOf("request")!=-1){
+		%>
+							<div class="accordion-group ">
+								<div class="accordion-heading ">
+									<input type="button"
+										class="accordion-toggle  dropdown-toggle btn btn-primary"
+										style="width: 100%; text-align: left;"
+										value=">>>> <%=stu.getStudFullName() %> (<%= stu.getUsername()%>,Student) At : <%=DateUtils.DateToString(i.getDate()) %>"
+										onclick="popupmessage(<%=z %>)"> <i class="icon-plus"></i>
+								</div>
+								<div id="<%=z %>" class="accordion-body collapse card "
+									style="display: none; margin: 0px 0px 0px 0px;">
+									<div class="accordion-inner  card-body  ml-5 ">
+										<%=i.getMessage()%>
+									</div>
+									<select id="classSelected<%=i.getnId()%>" class="form-control">
+		<%							try{
+										for(Teaches te:new TeachesDaos().findByTuIdAndSIdSimilar(uid, Integer.parseInt(i.getType().split("&")[1]))){
+		%>
+											<option value="<%=te.gettId()%>"><%=te.getDuration()%> | <%=te.getFees() %> | <%=te.gettAddress() %></option>
+			
+			<%
+									}}catch(Exception e){
+										System.out.println("Exception caught");
+										System.out.println(e);
+									}
+		
+		%>							</select>
+									<input type="button" class="btn btn-success" value="Accept" onclick="acceptRequest(<%=i.getnId()%>,<%=stu.getStudId() %>);">
+									<input type="button" class="btn btn-danger" value="Reject" onclick="rejectRequest(<%=i.getnId()%>,<%=stu.getStudId() %>);">
+								</div>
+							</div>
+							<br>
+							
+		<%
+							
+						}else{
 					
 		%>
 							<div class="accordion-group ">
@@ -198,7 +254,7 @@ int uid =-1;
 							</div>
 							<br>
 
-		<%			}else {
+		<%			}}else {
 						Tutor t = new TutorDaos().findByUId(i.getSender());
 		%>
 					
@@ -284,7 +340,18 @@ int uid =-1;
 			else
 				message.style.display="none";
 		}
-		
+		function acceptRequest(nid,studid){
+			var teid = document.getElementById("classSelected"+nid).value;
+			if(teid!=""){
+				$("#mainPartFile").load("/DronaDo/pages/Notification.jsp?mode=accept&noid="+nid+"&studid="+studid+"&teid="+teid);
+			}
+		}
+		function rejectRequest(nid,studid){
+			var teid = document.getElementById("classSelected"+nid).value;
+			if(teid!=""){
+				$("#mainPartFile").load("/DronaDo/pages/Notification.jsp?mode=reject&noid="+nid+"&studid="+studid+"&teid="+teid);
+			}
+		}
 		function deleteRequest(nid){
 			alert(nid);
 			$("#mainPartFile").load("/DronaDo/pages/Notification.jsp?nid="+nid);
