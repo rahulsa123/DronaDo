@@ -18,7 +18,6 @@ try{
 	int t = Integer.parseInt(request.getParameter("t"));
 	int s = Integer.parseInt(request.getParameter("s"));
 	System.out.println(t + " & "+ s + "received");
-	Teaches te = new TeachesDaos().findByTuIdAndSId(t, s);
 	Student stu = new StudentDaos().findByUId((int)session.getAttribute("uid"));
 	Subject sub = new SubjectDaos().getSubjectById(s);
 	new NotificationDaos().insert(new Notification(0,new java.util.Date(),(int)session.getAttribute("uid"),new TutorDaos().findByTuId(t).getUId(),stu.getStudFullName()+" has request to study " + sub.getSName() + "|" + sub.getSStandard() + "|" + sub.getSStream(),"request"+"&"+s));
